@@ -204,9 +204,9 @@ async function fetchIntelData() {
 
     targetDisplay.textContent = `+91 ${num}`;
 
-    // 3 seconds delay simulation for cool scanning effect
     setTimeout(async () => {
-        const rawFeedUrl = `https://exploitsindia.site/osint/api.php?key=patel-secure&type=number&num=${num}`;
+        // Correct active database API key restored
+        const rawFeedUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
 
         try {
             const response = await fetch(`https://api.allorigins.win/raw?url=` + encodeURIComponent(rawFeedUrl));
