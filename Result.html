@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PATEL CYBER - INTEL RESULT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --bg-card: #090d19;
+            --border-glow: rgba(6, 182, 212, 0.4);
+            --primary: #06b6d4;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-deep); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+
+        .main-header {
+            width: 100%; background: rgba(9, 13, 25, 0.85); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 15px 20px; position: sticky; top: 0; z-index: 100;
+        }
+        .header-container { max-width: 650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .brand-box { display: flex; align-items: center; gap: 14px; }
+        .brand-logo-wrap { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; }
+        .brand-title h1 { font-family: 'Orbitron', sans-serif; font-size: 15px; color: #fff; }
+        .brand-title span { font-size: 10px; color: var(--primary); letter-spacing: 2px; }
+
+        .main-container { max-width: 650px; width: 100%; padding: 20px; margin-bottom: 40px; }
+        
+        .card { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+        .result-header { padding: 15px 20px; background: rgba(6,182,212,0.1); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--primary); font-family: 'Orbitron', sans-serif; }
+        
+        .result-body { padding: 15px; }
+        .result-item { display: flex; padding: 14px 16px; background: #020617; border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; margin-bottom: 10px; font-size: 13px; align-items: center; }
+        .result-item:last-child { margin-bottom: 0; }
+        .result-item .label { width: 40%; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .result-item .value { width: 60%; color: #fff; font-weight: 600; text-align: right; word-break: break-word; }
+        .result-item .value.highlight { color: var(--primary); font-family: 'Orbitron', sans-serif; }
+
+        .loading-box { text-align: center; padding: 40px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 14px; }
+        .loading-box i { font-size: 35px; margin-bottom: 15px; display: block; }
+
+        .btn-back {
+            display: inline-block; margin-top: 20px; padding: 12px 24px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; text-decoration: none; font-size: 13px; font-weight: 700;
+        }
+        .btn-back:hover { background: rgba(255,255,255,0.1); }
+
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06); width: 100%; margin-top: auto; }
+        .owners-box { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 8px; }
+        .owner-badge {
+            font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 800; color: var(--primary);
+            background: rgba(6,182,212,0.08); padding: 6px 14px; border-radius: 10px; border: 1px solid rgba(6,182,212,0.3);
+        }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-container">
+        <div class="brand-box">
+            <div class="brand-logo-wrap"><i class="fas fa-shield-alt"></i></div>
+            <div class="brand-title">
+                <h1>PATEL CYBER</h1>
+                <span>INTEL DECODER</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="main-container">
+    <div class="card">
+        <div class="result-header">
+            <span><i class="fas fa-database"></i> SECURED INTEL RECORD</span>
+            <span id="targetDisplayNum">--</span>
+        </div>
+        <div class="result-body" id="resultContainer">
+            <div class="loading-box">
+                <i class="fas fa-spinner fa-spin"></i>
+                DECRYPTING DATABASE NODES... PLEASE WAIT
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Perform Another Scan</a>
+    </div>
+</div>
+
+<footer class="footer">
+    © 2026 PATEL CYBER TOOL · MAINTAINED & DEVELOPED BY
+    <div class="owners-box">
+        <span class="owner-badge">MR ANUJ PATEL</span>
+        <span style="color:var(--text-muted); font-weight:700;">&</span>
+        <span class="owner-badge">MR SAGAR PATEL</span>
+    </div>
+</footer>
+
+<script>
+async function fetchIntelData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const num = urlParams.get('num');
+    const container = document.getElementById('resultContainer');
+    const targetDisplay = document.getElementById('targetDisplayNum');
+
+    if (!num || num.length !== 10) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--danger);">Invalid or missing target number.</div>`;
+        return;
+    }
+
+    targetDisplay.textContent = `+91 ${num}`;
+
+    try {
+        const apiUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
+        const res = await fetch(`https://api.allorigins.win/raw?url=` + encodeURIComponent(apiUrl));
+        const data = await res.json();
+
+        if (!data || data.status === 'error' || !data.result || data.result.length === 0) {
+            throw new Error('No record found');
+        }
+
+        const info = data.result[0];
+        
+        let html = '';
+        html += `<div class="result-item"><span class="label"><i class="fas fa-phone"></i> Target</span><span class="value highlight">${info.num || '+91 ' + num}</span></div>`;
+        html += `<div class="result-item"><span class="label"><i class="fas fa-user"></i> Full Name</span><span class="value highlight">${info.name || 'N/A'}</span></div>`;
+        html += `<div class="result-item"><span class="label"><i class="fas fa-user-shield"></i> Father Name</span><span class="value">${info.fname || 'N/A'}</span></div>`;
+        html += `<div class="result-item"><span class="label"><i class="fas fa-id-card"></i> Aadhaar ID</span><span class="value highlight">${info.aadhar || 'N/A'}</span></div>`;
+        html += `<div class="result-item"><span class="label"><i class="fas fa-map-marker-alt"></i> Location</span><span class="value">${info.address || 'N/A'}</span></div>`;
+        html += `<div class="result-item"><span class="label"><i class="fas fa-tower-broadcast"></i> Circle</span><span class="value">${info.circle || 'N/A'}</span></div>`;
+
+        container.innerHTML = html;
+    } catch (err) {
+        // Fallback view if proxy blocks direct load, providing direct access button nicely formatted in theme boxes
+        container.innerHTML = `
+            <div style="text-align:center; padding:25px;">
+                <p style="color:var(--text-muted); font-size:13px; margin-bottom:15px;">Direct server handshake required for this node record.</p>
+                <a href="https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}" target="_blank" class="btn-action" style="text-decoration:none; display:inline-flex; justify-content:center; padding:14px 20px;">
+                    <i class="fas fa-external-link-alt"></i> OPEN RAW JSON FEED
+                </a>
+            </div>
+        `;
+    }
+}
+
+fetchIntelData();
+</script>
+</body>
+</html>
