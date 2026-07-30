@@ -55,14 +55,14 @@
             font-size: 12px; font-weight: 700; color: var(--primary); font-family: 'Orbitron', sans-serif;
         }
         
-        .result-body { padding: 20px; text-align: center; }
+        .result-body { padding: 25px; text-align: center; }
         
-        .loading-box { padding: 30px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 13px; }
+        .loading-box { padding: 20px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 13px; }
         .loading-box i { font-size: 30px; margin-bottom: 12px; display: block; }
 
         .btn-action {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 16px; margin-top: 15px;
+            width: 100%; padding: 16px; margin-top: 10px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none; border-radius: 14px; color: #fff; font-size: 14px; font-weight: 700;
             font-family: 'Orbitron', sans-serif; text-decoration: none;
@@ -113,7 +113,7 @@
             <div id="actionArea" style="display:none;">
                 <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Target telemetry and registry record successfully extracted.</p>
                 <a id="secureLink" href="#" target="_blank" class="btn-action">
-                    <i class="fas fa-id-card"></i> OPEN VERIFIED RECORD FEED
+                    <i class="fas fa-id-card"></i> OPEN DETAILS & RECORD FEED
                 </a>
             </div>
         </div>
@@ -145,11 +145,10 @@ if (!num || num.length !== 10) {
 
     setTimeout(() => {
         document.getElementById('loadingBox').style.display = 'none';
-        document.getElementById('secureLink.href') = targetUrl; // handled below safely
         const btn = document.getElementById('secureLink');
         btn.href = targetUrl;
         document.getElementById('actionArea').style.display = 'block';
-    }, 2500);
+    }, 2000);
 }
 </script>
 </body>
