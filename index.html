@@ -20,93 +20,230 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg-deep); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.12) 0%, transparent 40%);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         .disclaimer-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.95); z-index: 9999;
+            background: rgba(2, 6, 23, 0.96); z-index: 9999;
             display: flex; justify-content: center; align-items: center; backdrop-filter: blur(15px);
+            transition: all 0.5s ease;
         }
         .disclaimer-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
         .disclaimer-box {
-            background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 24px; padding: 40px 30px; max-width: 480px; width: 90%; text-align: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 0 60px rgba(6, 182, 212, 0.25);
+            border-radius: 24px; padding: 40px 30px; max-width: 480px; width: 90%;
+            text-align: center; animation: fadeIn 0.5s ease;
         }
-        .disclaimer-box h2 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 20px; margin-bottom: 15px; }
+        .disclaimer-box .icon-big { font-size: 50px; color: var(--primary); margin-bottom: 15px; display: block; text-shadow: 0 0 20px var(--primary); }
+        .disclaimer-box h2 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 15px; letter-spacing: 1px; }
         .disclaimer-box .content { color: var(--text-muted); font-size: 13px; line-height: 1.7; margin-bottom: 25px; text-align: left; }
+        .disclaimer-box .content p { margin-bottom: 10px; }
+        
         .btn-accept {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Orbitron', sans-serif;
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(6,182,212,0.4);
         }
+        .btn-accept:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(6,182,212,0.6); }
 
         .main-header {
-            width: 100%; background: rgba(9, 13, 25, 0.85); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 15px 20px; position: sticky; top: 0; z-index: 100;
+            width: 100%; background: rgba(9, 13, 25, 0.85); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.08); padding: 15px 20px;
+            position: sticky; top: 0; z-index: 100;
         }
         .header-container { max-width: 650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
         .brand-box { display: flex; align-items: center; gap: 14px; }
-        .brand-logo-wrap { width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; }
-        .brand-title h1 { font-family: 'Orbitron', sans-serif; font-size: 15px; color: #fff; }
-        .brand-title span { font-size: 10px; color: var(--primary); letter-spacing: 2px; }
+        .brand-logo-wrap {
+            width: 50px; height: 50px; border-radius: 14px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; box-shadow: 0 0 20px rgba(6,182,212,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .brand-logo-wrap i { font-size: 22px; color: #fff; }
+        
+        .brand-title h1 { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+        .brand-title span { font-size: 10px; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+
+        .system-status {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(16, 185, 129, 0.1); padding: 6px 14px; border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3); font-size: 11px; color: var(--accent); font-weight: 600;
+        }
+        .system-status .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); }
 
         .main-container { max-width: 650px; width: 100%; padding: 20px; margin-bottom: 40px; }
-        .card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
-        .input-group { display: flex; align-items: center; background: #020617; border: 2px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; }
-        .country-code { padding: 14px 16px; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-weight: 700; }
-        .input-group input { flex: 1; background: transparent; border: none; padding: 14px; color: #fff; font-size: 16px; outline: none; }
+
+        .ad-banner {
+            width: 100%; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.12);
+            border-radius: 14px; padding: 14px; text-align: center; font-size: 11px; color: var(--text-muted);
+            margin-bottom: 20px; letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        .card {
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 22px; box-shadow: 0 25px 60px rgba(0,0,0,0.7); overflow: hidden;
+            position: relative;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        .card-body { padding: 30px; }
+
+        .form-group { margin-bottom: 22px; }
+        .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .input-group {
+            display: flex; align-items: center; background: #020617;
+            border: 2px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden;
+            transition: 0.3s;
+        }
+        .input-group:focus-within { border-color: var(--primary); box-shadow: 0 0 15px rgba(6,182,212,0.25); }
+        .country-code { padding: 15px 18px; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.08); font-weight: 700; color: var(--text-muted); }
+        .input-group input { flex: 1; background: transparent; border: none; padding: 15px; color: #fff; font-size: 16px; outline: none; letter-spacing: 1px; }
+
         .btn-action {
-            width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Orbitron', sans-serif;
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none; border-radius: 14px; color: #fff; font-size: 15px; font-weight: 700;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;
+            font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
             box-shadow: 0 5px 20px rgba(6,182,212,0.3);
+            transition: 0.3s;
+        }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(6,182,212,0.5); }
+
+        .result-box {
+            margin-top: 25px; background: #020617;
+            border: 1px solid var(--border-glow); border-radius: 16px; padding: 22px; text-align: center; display: none;
+            box-shadow: 0 0 35px rgba(6,182,212,0.15);
+        }
+        .result-box.show { display: block; animation: fadeIn 0.4s ease; }
+        
+        .timer-box { font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--primary); margin-bottom: 5px; letter-spacing: 1px; }
+
+        .social-section { margin-top: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; }
+        .social-title { font-size: 11px; color: var(--text-muted); margin-bottom: 15px; text-transform: uppercase; font-weight: 700; letter-spacing: 1.5px; }
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .social-btn {
+            padding: 12px 10px; border-radius: 12px; font-size: 12px; font-weight: 700;
+            text-decoration: none; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+            border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); transition: 0.3s;
+        }
+        .social-btn:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); border-color: rgba(255,255,255,0.2); }
+        .social-btn i { font-size: 18px; }
+
+        .footer { text-align: center; padding: 25px 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06); width: 100%; margin-top: auto; letter-spacing: 1px; }
+        .owners-box {
+            display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 10px;
+        }
+        .owner-badge {
+            font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 800; color: var(--primary);
+            text-shadow: 0 0 10px rgba(6,182,212,0.5); background: rgba(6,182,212,0.08);
+            padding: 7px 16px; border-radius: 12px; border: 1px solid rgba(6,182,212,0.35);
         }
         .error-text { color: var(--danger); font-size: 12px; margin-top: 8px; display: none; }
-
-        .footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06); width: 100%; margin-top: auto; }
-        .owners-box { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 8px; }
-        .owner-badge {
-            font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 800; color: var(--primary);
-            background: rgba(6,182,212,0.08); padding: 6px 14px; border-radius: 10px; border: 1px solid rgba(6,182,212,0.3);
-        }
     </style>
 </head>
 <body>
 
 <div class="disclaimer-overlay" id="disclaimerOverlay">
     <div class="disclaimer-box">
+        <span class="icon-big"><i class="fas fa-shield-halved"></i></span>
         <h2>PATEL CYBER PROTOCOL</h2>
         <div class="content">
-            <p>1. Authorized security testing and research framework only.</p>
-            <p>2. PATEL TEAM takes no responsibility for user deployment.</p>
+            <p>1. This framework is strictly for educational, research and authorized security testing purposes only.</p>
+            <p>2. Unauthorized tracking or database extraction is strictly prohibited under cyber regulations.</p>
+            <p>3. MR ANUJ PATEL & MR SAGAR PATEL assume zero liability for user deployment.</p>
         </div>
-        <button class="btn-accept" id="acceptBtn">AUTHENTICATE & ENTER</button>
+        <button class="btn-accept" id="acceptBtn" type="button">AUTHENTICATE & ENTER</button>
     </div>
 </div>
 
 <header class="main-header">
     <div class="header-container">
         <div class="brand-box">
-            <div class="brand-logo-wrap"><i class="fas fa-shield-alt"></i></div>
+            <div class="brand-logo-wrap">
+                <i class="fas fa-shield-cat"></i>
+            </div>
             <div class="brand-title">
                 <h1>PATEL CYBER</h1>
-                <span>BY PATEL TEAM</span>
+                <span>NEXT GEN OSINT</span>
             </div>
+        </div>
+        <div class="system-status">
+            <div class="dot"></div>
+            <span>SECURE LIVE</span>
         </div>
     </div>
 </header>
 
-<div class="main-container">
+<div class="main-container animate-fade">
+    <div class="ad-banner">
+        <i class="fas fa-satellite"></i> ADVANCED NUMBER TRACKER & IP TELEMETRY NODE
+    </div>
+
     <div class="card">
-        <form id="trackForm">
-            <div class="form-group">
-                <label class="form-label">Target Mobile Number</label>
-                <div class="input-group">
-                    <span class="country-code">+91</span>
-                    <input type="tel" id="phoneInput" placeholder="Enter 10-digit number" maxlength="10" inputmode="numeric">
+        <div class="card-body">
+            <form id="trackForm">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-phone-alt"></i> Target Mobile Number</label>
+                    <div class="input-group">
+                        <span class="country-code">+91</span>
+                        <input type="tel" id="phoneInput" placeholder="Enter 10-digit number" maxlength="10" inputmode="numeric">
+                    </div>
+                    <div class="error-text" id="errorText">Please enter a valid 10-digit number</div>
                 </div>
-                <div class="error-text" id="errorText">Please enter a valid 10-digit number</div>
+                <button type="submit" class="btn-action" id="trackBtn">
+                    <i class="fas fa-satellite-dish"></i> EXECUTE OSINT SCAN
+                </button>
+            </form>
+
+            <div class="result-box" id="resultBox">
+                <div class="timer-box" id="timerText"><i class="fas fa-spinner fa-spin"></i> INITIALIZING SECURE REDIRECT... (3s)</div>
             </div>
-            <button type="submit" class="btn-action" id="trackBtn">EXECUTE OSINT SCAN</button>
-        </form>
+
+            <div class="social-section">
+                <div class="social-title">Secure Channels & Official Networks</div>
+                <div class="social-grid">
+                    <a href="https://youtube.com/@pateltatarpur02?si=mQurSPmC8yLZl1Cc" target="_blank" class="social-btn" style="color:#ef4444;">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                    <a href="https://instagram.com/_.official_anuj" target="_blank" class="social-btn" style="color:#ec4899;">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://t.me/mrpatelji8717" target="_blank" class="social-btn" style="color:#38bdf8;">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -120,10 +257,11 @@
 </footer>
 
 <script>
-document.getElementById('acceptBtn').onclick = () => {
+document.getElementById('acceptBtn').addEventListener('click', function() {
     document.getElementById('disclaimerOverlay').classList.add('hidden');
     sessionStorage.setItem('disclaimerShown', 'true');
-};
+});
+
 if (sessionStorage.getItem('disclaimerShown') === 'true') {
     document.getElementById('disclaimerOverlay').classList.add('hidden');
 }
@@ -132,20 +270,40 @@ document.getElementById('phoneInput').addEventListener('input', function() {
     this.value = this.value.replace(/[^0-9]/g, '');
 });
 
-document.getElementById('trackForm').onsubmit = (e) => {
+document.getElementById('trackForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const num = document.getElementById('phoneInput').value.trim();
+    const number = document.getElementById('phoneInput').value.trim();
     const errorText = document.getElementById('errorText');
+    const trackBtn = document.getElementById('trackBtn');
+    const resultBox = document.getElementById('resultBox');
+    const timerText = document.getElementById('timerText');
 
-    if (num.length !== 10) {
-        errorText.style.display = 'block';
+    if (number.length !== 10 || !/^[0-9]{10}$/.test(number)) {
+        errorText.textContent = 'Please enter a valid 10-digit number!';
+        errorText.classList.add('show');
+        resultBox.classList.remove('show');
         return;
     }
-    errorText.style.display = 'none';
 
-    // Redirect to result view page passing the target number in URL parameter
-    window.location.href = `result.html?num=${num}`;
-};
+    errorText.classList.remove('show');
+    trackBtn.disabled = true;
+    trackBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> REDIRECTING...';
+    resultBox.classList.add('show');
+
+    let timeLeft = 3;
+    timerText.innerHTML = `<i class="fas fa-spinner fa-spin"></i> DECRYPTING & REDIRECTING... (${timeLeft}s)`;
+
+    const countdown = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+            timerText.innerHTML = `<i class="fas fa-spinner fa-spin"></i> SECURING CONNECTION... (${timeLeft}s)`;
+        } else {
+            clearInterval(countdown);
+            // Safe redirect to result.html carrying the target number
+            window.location.href = `result.html?num=${number}`;
+        }
+    }, 1000);
+});
 </script>
 </body>
 </html>
