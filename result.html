@@ -33,7 +33,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-fade { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         .main-header {
             width: 100%; background: rgba(9, 13, 25, 0.85); backdrop-filter: blur(15px);
@@ -81,10 +81,10 @@
         .data-row {
             display: flex; justify-content: space-between; padding: 14px 16px;
             background: #020617; border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px; margin-bottom: 10px; font-size: 13px; align-items: center;
+            border-radius: 12px; margin-bottom: 10px; font-size: 13px; align-items: center; gap: 15px;
         }
         .data-row:last-child { margin-bottom: 0; }
-        .data-label { color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .data-label { color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .data-value { color: #fff; font-weight: 700; text-align: right; word-break: break-word; }
         .data-value.highlight { color: var(--primary); font-family: 'Orbitron', sans-serif; }
 
@@ -130,18 +130,18 @@
 <div class="main-container animate-fade">
     <div class="card">
         <div class="result-header">
-            <span><i class="fas fa-database"></i> SECURED INTEL RECORD</span>
+            <span><i class="fas fa-database"></i> LIVE TELEMETRY RECORD</span>
             <span id="targetDisplayNum">--</span>
         </div>
         <div class="result-body">
             <div class="loading-box" id="loadingBox">
                 <i class="fas fa-spinner fa-spin"></i>
-                EXTRACTING TELEMETRY & MAPPING BOXES...
+                FETCHING LIVE DATABASE RECORDS...
             </div>
 
             <div class="cyber-data-card" id="cyberDataCard">
                 <div class="data-row">
-                    <span class="data-label"><i class="fas fa-phone"></i> Target Number</span>
+                    <span class="data-label"><i class="fas fa-phone"></i> Number</span>
                     <span class="data-value highlight" id="resNum">--</span>
                 </div>
                 <div class="data-row">
@@ -161,7 +161,7 @@
                     <span class="data-value" id="resAddress">--</span>
                 </div>
                 <div class="data-row">
-                    <span class="data-label"><i class="fas fa-tower-broadcast"></i> Telecom Circle</span>
+                    <span class="data-label"><i class="fas fa-tower-broadcast"></i> Circle / Carrier</span>
                     <span class="data-value" id="resCircle">--</span>
                 </div>
             </div>
@@ -185,7 +185,7 @@
 </footer>
 
 <script>
-async function fetchIntelData() {
+async function fetchRealIntel() {
     const urlParams = new URLSearchParams(window.location.search);
     const num = urlParams.get('num');
     const loadingBox = document.getElementById('loadingBox');
@@ -199,48 +199,57 @@ async function fetchIntelData() {
     }
 
     targetDisplay.textContent = `+91 ${num}`;
-    const rawFeedUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
+    const directApiUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
+    const proxyApiUrl = `https://api.allorigins.win/raw?url=` + encodeURIComponent(directApiUrl);
+
+    let fetchedData = null;
 
     try {
-        // Using cors proxy endpoint to reliably parse JSON into custom structured boxes
-        const response = await fetch(`https://api.allorigins.win/raw?url=` + encodeURIComponent(rawFeedUrl));
-        const resData = await response.json();
-
-        if (resData && resData.status !== 'error' && resData.result && resData.result.length > 0) {
-            const info = resData.result[0];
-            document.getElementById('resNum').textContent = info.num || '+91 ' + num;
-            document.getElementById('resName').textContent = info.name || 'VERIFIED USER';
-            document.getElementById('resFname').textContent = info.fname || 'REDACTED';
-            document.getElementById('resAadhar').textContent = info.aadhar || 'XXXX-XXXX-' + num.slice(-4);
-            document.getElementById('resAddress').textContent = info.address || 'INDIA';
-            document.getElementById('resCircle').textContent = info.circle || 'GSM / VOLTE';
-
-            loadingBox.style.display = 'none';
-            dataCard.classList.add('show');
-        } else {
-            throw new Error();
+        // Try direct fetch first for speed
+        const res = await fetch(directApiUrl, { mode: 'cors' });
+        fetchedData = await res.json();
+    } catch (e1) {
+        try {
+            // Fallback to proxy if direct blocked
+            const res2 = await fetch(proxyApiUrl);
+            fetchedData = await res2.json();
+        } catch (e2) {
+            fetchedData = null;
         }
-    } catch (err) {
-        // Fallback layout mapping so boxes are never empty or plain text
-        loadingBox.style.display = 'none';
-        dataCard.classList.add('show');
-        
-        document.getElementById('resNum').textContent = '+91 ' + num;
-        document.getElementById('resName').textContent = 'PATEL SECURE NODE_' + num.slice(-4);
-        document.getElementById('resFname').textContent = 'VERIFIED RECORD';
-        document.getElementById('resAadhar').textContent = 'XXXX-XXXX-' + num.slice(-4);
-        document.getElementById('resAddress').textContent = 'MADHYA PRADESH, INDIA';
-        document.getElementById('resCircle').textContent = 'JIO / AIRTEL / VI';
+    }
 
+    loadingBox.style.display = 'none';
+
+    if (fetchedData && fetchedData.status !== 'error' && fetchedData.result && fetchedData.result.length > 0) {
+        const info = fetchedData.result[0];
+        
+        // Populate actual live properties returned by server without dummy fillers
+        document.getElementById('resNum').textContent = info.num ? `+91 ${info.num}` : `+91 ${num}`;
+        document.getElementById('resName').textContent = info.name || info.full_name || 'NOT FOUND IN REGISTRY';
+        document.getElementById('resFname').textContent = info.fname || info.father_name || 'N/A';
+        document.getElementById('resAadhar').textContent = info.aadhar || info.aadhaar || 'REDACTED';
+        document.getElementById('resAddress').textContent = info.address || 'DATA UNAVAILABLE';
+        document.getElementById('resCircle').textContent = info.circle || info.operator || 'STANDARD GSM';
+
+        dataCard.classList.add('show');
+    } else {
+        // If specific number has no entry in database
+        loadingBox.style.display = 'block';
+        loadingBox.innerHTML = `
+            <span style="color:var(--danger); font-size:14px; margin-bottom:10px; display:block;">
+                <i class="fas fa-triangle-exclamation"></i> No registry match found for +91 ${num} in active node.
+            </span>
+            <span style="color:var(--text-muted); font-size:12px;">You can directly query the raw server registry below:</span>
+        `;
         fallbackContainer.innerHTML = `
-            <a href="${rawFeedUrl}" target="_blank" class="btn-action" style="margin-top:20px;">
-                <i class="fas fa-external-link-alt"></i> OPEN RAW JSON FEED NODE
+            <a href="${directApiUrl}" target="_blank" class="btn-action">
+                <i class="fas fa-external-link-alt"></i> CHECK RAW API FEED
             </a>
         `;
     }
 }
 
-fetchIntelData();
+fetchRealIntel();
 </script>
 </body>
 </html>
