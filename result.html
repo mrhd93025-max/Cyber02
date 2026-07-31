@@ -33,7 +33,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-fade { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade { animation: fadeIn 0.4s ease forwards; }
 
         .main-header {
             width: 100%; background: rgba(9, 13, 25, 0.85); backdrop-filter: blur(15px);
@@ -72,21 +72,17 @@
         
         .result-body { padding: 20px; }
         
-        .loading-box { text-align: center; padding: 40px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 13px; letter-spacing: 1px; }
-        .loading-box i { font-size: 35px; margin-bottom: 15px; display: block; text-shadow: 0 0 15px var(--primary); }
-
-        .cyber-data-card { display: none; }
-        .cyber-data-card.show { display: block; animation: fadeIn 0.4s ease; }
-        
-        .data-row {
-            display: flex; justify-content: space-between; padding: 14px 16px;
-            background: #020617; border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px; margin-bottom: 10px; font-size: 13px; align-items: center; gap: 15px;
+        /* Direct stream box styling matching your cyber theme */
+        .raw-stream-box {
+            background: #020617; border: 1px solid rgba(6,182,212,0.3);
+            border-radius: 14px; padding: 15px; color: #38bdf8;
+            font-family: monospace; font-size: 13px; line-height: 1.6;
+            max-height: 350px; overflow-y: auto; word-break: break-all;
+            text-align: left; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
-        .data-row:last-child { margin-bottom: 0; }
-        .data-label { color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .data-value { color: #fff; font-weight: 700; text-align: right; word-break: break-word; }
-        .data-value.highlight { color: var(--primary); font-family: 'Orbitron', sans-serif; }
+
+        .loading-box { text-align: center; padding: 30px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 13px; }
+        .loading-box i { font-size: 30px; margin-bottom: 12px; display: block; text-shadow: 0 0 15px var(--primary); }
 
         .btn-action {
             width: 100%; padding: 14px; margin-top: 15px;
@@ -130,43 +126,21 @@
 <div class="main-container animate-fade">
     <div class="card">
         <div class="result-header">
-            <span><i class="fas fa-database"></i> LIVE TELEMETRY RECORD</span>
+            <span><i class="fas fa-database"></i> SECURED REGISTRY STREAM</span>
             <span id="targetDisplayNum">--</span>
         </div>
         <div class="result-body">
             <div class="loading-box" id="loadingBox">
                 <i class="fas fa-spinner fa-spin"></i>
-                FETCHING LIVE DATABASE RECORDS...
+                ESTABLISHING SECURE NODE STREAM...
             </div>
 
-            <div class="cyber-data-card" id="cyberDataCard">
-                <div class="data-row">
-                    <span class="data-label"><i class="fas fa-phone"></i> Number</span>
-                    <span class="data-value highlight" id="resNum">--</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label"><i class="fas fa-user"></i> Full Name</span>
-                    <span class="data-value highlight" id="resName">--</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label"><i class="fas fa-user-shield"></i> Father Name</span>
-                    <span class="data-value" id="resFname">--</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label"><i class="fas fa-id-card"></i> Aadhaar ID</span>
-                    <span class="data-value highlight" id="resAadhar">--</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label"><i class="fas fa-map-marker-alt"></i> Address</span>
-                    <span class="data-value" id="resAddress">--</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label"><i class="fas fa-tower-broadcast"></i> Circle / Carrier</span>
-                    <span class="data-value" id="resCircle">--</span>
-                </div>
+            <div id="contentArea" style="display:none;">
+                <div class="raw-stream-box" id="rawStreamContent">Fetching live feed...</div>
+                <a id="directLinkBtn" href="#" target="_blank" class="btn-action">
+                    <i class="fas fa-external-link-alt"></i> OPEN FULL SCREEN FEED
+                </a>
             </div>
-
-            <div id="fallbackContainer"></div>
         </div>
     </div>
     
@@ -185,13 +159,14 @@
 </footer>
 
 <script>
-async function fetchRealIntel() {
+async function loadDirectStream() {
     const urlParams = new URLSearchParams(window.location.search);
     const num = urlParams.get('num');
     const loadingBox = document.getElementById('loadingBox');
-    const dataCard = document.getElementById('cyberDataCard');
+    const contentArea = document.getElementById('contentArea');
+    const rawStreamContent = document.getElementById('rawStreamContent');
     const targetDisplay = document.getElementById('targetDisplayNum');
-    const fallbackContainer = document.getElementById('fallbackContainer');
+    const directLinkBtn = document.getElementById('directLinkBtn');
 
     if (!num || num.length !== 10) {
         loadingBox.innerHTML = `<span style="color:var(--danger);">Invalid or missing target number.</span>`;
@@ -199,57 +174,29 @@ async function fetchRealIntel() {
     }
 
     targetDisplay.textContent = `+91 ${num}`;
-    const directApiUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
-    const proxyApiUrl = `https://api.allorigins.win/raw?url=` + encodeURIComponent(directApiUrl);
-
-    let fetchedData = null;
+    const targetApiUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
+    directLinkBtn.href = targetApiUrl;
 
     try {
-        // Try direct fetch first for speed
-        const res = await fetch(directApiUrl, { mode: 'cors' });
-        fetchedData = await res.json();
-    } catch (e1) {
-        try {
-            // Fallback to proxy if direct blocked
-            const res2 = await fetch(proxyApiUrl);
-            fetchedData = await res2.json();
-        } catch (e2) {
-            fetchedData = null;
-        }
-    }
+        // Fetching text directly via CORS proxy to display raw text stream inside the cyber box instantly
+        const proxyUrl = `https://api.allorigins.win/raw?url=` + encodeURIComponent(targetApiUrl);
+        const response = await fetch(proxyUrl);
+        const textData = await response.text();
 
-    loadingBox.style.display = 'none';
-
-    if (fetchedData && fetchedData.status !== 'error' && fetchedData.result && fetchedData.result.length > 0) {
-        const info = fetchedData.result[0];
-        
-        // Populate actual live properties returned by server without dummy fillers
-        document.getElementById('resNum').textContent = info.num ? `+91 ${info.num}` : `+91 ${num}`;
-        document.getElementById('resName').textContent = info.name || info.full_name || 'NOT FOUND IN REGISTRY';
-        document.getElementById('resFname').textContent = info.fname || info.father_name || 'N/A';
-        document.getElementById('resAadhar').textContent = info.aadhar || info.aadhaar || 'REDACTED';
-        document.getElementById('resAddress').textContent = info.address || 'DATA UNAVAILABLE';
-        document.getElementById('resCircle').textContent = info.circle || info.operator || 'STANDARD GSM';
-
-        dataCard.classList.add('show');
-    } else {
-        // If specific number has no entry in database
-        loadingBox.style.display = 'block';
-        loadingBox.innerHTML = `
-            <span style="color:var(--danger); font-size:14px; margin-bottom:10px; display:block;">
-                <i class="fas fa-triangle-exclamation"></i> No registry match found for +91 ${num} in active node.
-            </span>
-            <span style="color:var(--text-muted); font-size:12px;">You can directly query the raw server registry below:</span>
-        `;
-        fallbackContainer.innerHTML = `
-            <a href="${directApiUrl}" target="_blank" class="btn-action">
-                <i class="fas fa-external-link-alt"></i> CHECK RAW API FEED
-            </a>
-        `;
+        loadingBox.style.display = 'none';
+        rawStreamContent.textContent = textData || "No data stream returned from server.";
+        contentArea.style.display = 'block';
+        contentArea.classList.add('animate-fade');
+    } catch (err) {
+        // Ultimate fallback: if proxy fails, show direct iframe stream view inside the box
+        loadingBox.style.display = 'none';
+        rawStreamContent.innerHTML = `<iframe src="${targetApiUrl}" style="width:100%; height:250px; border:none; background:#000;"></iframe>`;
+        contentArea.style.display = 'block';
+        contentArea.classList.add('animate-fade');
     }
 }
 
-fetchRealIntel();
+loadDirectStream();
 </script>
 </body>
 </html>
