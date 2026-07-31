@@ -72,14 +72,22 @@
         
         .result-body { padding: 20px; }
         
-        /* Direct stream box styling matching your cyber theme */
-        .raw-stream-box {
+        /* Clean structured formatted lines box */
+        .formatted-box {
             background: #020617; border: 1px solid rgba(6,182,212,0.3);
-            border-radius: 14px; padding: 15px; color: #38bdf8;
-            font-family: monospace; font-size: 13px; line-height: 1.6;
-            max-height: 350px; overflow-y: auto; word-break: break-all;
-            text-align: left; box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            border-radius: 14px; padding: 18px; color: #f8fafc;
+            font-size: 14px; line-height: 1.8; text-align: left;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column; gap: 10px;
         }
+
+        .info-item {
+            display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 8px; word-break: break-word;
+        }
+        .info-item:last-child { border-bottom: none; }
+        .info-label { color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .info-val { color: var(--primary); font-weight: 700; text-align: right; }
 
         .loading-box { text-align: center; padding: 30px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 13px; }
         .loading-box i { font-size: 30px; margin-bottom: 12px; display: block; text-shadow: 0 0 15px var(--primary); }
@@ -126,19 +134,21 @@
 <div class="main-container animate-fade">
     <div class="card">
         <div class="result-header">
-            <span><i class="fas fa-database"></i> SECURED REGISTRY STREAM</span>
+            <span><i class="fas fa-database"></i> STRUCTURED INTEL RECORD</span>
             <span id="targetDisplayNum">--</span>
         </div>
         <div class="result-body">
             <div class="loading-box" id="loadingBox">
                 <i class="fas fa-spinner fa-spin"></i>
-                ESTABLISHING SECURE NODE STREAM...
+                FORMATTING TELEMETRY NODES...
             </div>
 
             <div id="contentArea" style="display:none;">
-                <div class="raw-stream-box" id="rawStreamContent">Fetching live feed...</div>
-                <a id="directLinkBtn" href="#" target="_blank" class="btn-action">
-                    <i class="fas fa-external-link-alt"></i> OPEN FULL SCREEN FEED
+                <div class="formatted-box" id="formattedBoxContent">
+                    <!-- Parsed structured data will appear here cleanly divided -->
+                </div>
+                <a id="directLinkBtn" href="#" target="_blank" class="btn-action" style="margin-top:15px;">
+                    <i class="fas fa-external-link-alt"></i> OPEN RAW JSON FEED
                 </a>
             </div>
         </div>
@@ -159,12 +169,12 @@
 </footer>
 
 <script>
-async function loadDirectStream() {
+async function loadStructuredData() {
     const urlParams = new URLSearchParams(window.location.search);
     const num = urlParams.get('num');
     const loadingBox = document.getElementById('loadingBox');
     const contentArea = document.getElementById('contentArea');
-    const rawStreamContent = document.getElementById('rawStreamContent');
+    const formattedBoxContent = document.getElementById('formattedBoxContent');
     const targetDisplay = document.getElementById('targetDisplayNum');
     const directLinkBtn = document.getElementById('directLinkBtn');
 
@@ -178,25 +188,46 @@ async function loadDirectStream() {
     directLinkBtn.href = targetApiUrl;
 
     try {
-        // Fetching text directly via CORS proxy to display raw text stream inside the cyber box instantly
         const proxyUrl = `https://api.allorigins.win/raw?url=` + encodeURIComponent(targetApiUrl);
         const response = await fetch(proxyUrl);
         const textData = await response.text();
 
         loadingBox.style.display = 'none';
-        rawStreamContent.textContent = textData || "No data stream returned from server.";
+
+        // Try parsing JSON to cleanly split items line by line
+        try {
+            const jsonData = JSON.parse(textData);
+            if(jsonData.result && jsonData.result.length > 0) {
+                let info = jsonData.result[0];
+                let htmlOutput = '';
+                for (let key in info) {
+                    htmlOutput += `
+                        <div class="info-item">
+                            <span class="info-label"><i class="fas fa-angle-right"></i> ${key.toUpperCase()}</span>
+                            <span class="info-val">${info[key]}</span>
+                        </div>
+                    `;
+                }
+                formattedBoxContent.innerHTML = htmlOutput;
+            } else {
+                formattedBoxContent.innerHTML = `<div style="color:var(--danger);">No records found in database for this number.</div>`;
+            }
+        } catch(parseErr) {
+            // If it's pure raw text, split it nicely by commas or newlines so it never stays in one single line
+            let cleanText = textData.replace(/[{}[\]"]/g, '').split(',').join('<br><br>');
+            formattedBoxContent.innerHTML = `<div style="line-height: 1.8; color:#38bdf8;">${cleanText}</div>`;
+        }
+
         contentArea.style.display = 'block';
         contentArea.classList.add('animate-fade');
     } catch (err) {
-        // Ultimate fallback: if proxy fails, show direct iframe stream view inside the box
         loadingBox.style.display = 'none';
-        rawStreamContent.innerHTML = `<iframe src="${targetApiUrl}" style="width:100%; height:250px; border:none; background:#000;"></iframe>`;
+        formattedBoxContent.innerHTML = `<span style="color:var(--danger);">Connection error. Please use the button below to view raw feed.</span>`;
         contentArea.style.display = 'block';
-        contentArea.classList.add('animate-fade');
     }
 }
 
-loadDirectStream();
+loadStructuredData();
 </script>
 </body>
 </html>
