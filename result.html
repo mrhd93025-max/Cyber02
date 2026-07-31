@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PATEL CYBER - INTEL RESULT</title>
+    <title>PATEL CYBER - ULTIMATE INTEL RESULT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -70,17 +70,23 @@
             font-size: 12px; font-weight: 700; color: var(--primary); font-family: 'Orbitron', sans-serif;
         }
         
-        .result-body { padding: 15px; }
+        .result-body { padding: 20px; }
         
-        /* Ultra high-tech responsive frame container */
-        .frame-container {
-            width: 100%; height: 380px; background: #020617;
-            border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 14px;
-            overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+        .loading-box { text-align: center; padding: 40px; color: var(--primary); font-family: 'Orbitron', sans-serif; font-size: 13px; letter-spacing: 1px; }
+        .loading-box i { font-size: 35px; margin-bottom: 15px; display: block; text-shadow: 0 0 15px var(--primary); }
+
+        .cyber-data-card { display: none; }
+        .cyber-data-card.show { display: block; animation: fadeIn 0.4s ease; }
+        
+        .data-row {
+            display: flex; justify-content: space-between; padding: 14px 16px;
+            background: #020617; border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px; margin-bottom: 10px; font-size: 13px; align-items: center; gap: 15px;
         }
-        .frame-container iframe {
-            width: 100%; height: 100%; border: none; background: transparent;
-        }
+        .data-row:last-child { margin-bottom: 0; }
+        .data-label { color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .data-value { color: #fff; font-weight: 700; text-align: right; word-break: break-word; }
+        .data-value.highlight { color: var(--primary); font-family: 'Orbitron', sans-serif; }
 
         .btn-action {
             width: 100%; padding: 14px; margin-top: 15px;
@@ -115,7 +121,7 @@
             <div class="brand-logo-wrap"><i class="fas fa-shield-alt"></i></div>
             <div class="brand-title">
                 <h1>PATEL CYBER</h1>
-                <span>INTEL DECODER</span>
+                <span>ULTIMATE INTEL DECODER</span>
             </div>
         </div>
     </div>
@@ -124,16 +130,43 @@
 <div class="main-container animate-fade">
     <div class="card">
         <div class="result-header">
-            <span><i class="fas fa-database"></i> SECURED LIVE STREAM NODE</span>
+            <span><i class="fas fa-satellite-dish"></i> SECURED TELEMETRY NODE</span>
             <span id="targetDisplayNum">--</span>
         </div>
         <div class="result-body">
-            <div class="frame-container">
-                <iframe id="apiFrame" src="about:blank"></iframe>
+            <div class="loading-box" id="loadingBox">
+                <i class="fas fa-spinner fa-spin"></i>
+                BYPASSING GATEWAYS & FETCHING DATA...
             </div>
-            <a id="directOpenBtn" href="#" target="_blank" class="btn-action">
-                <i class="fas fa-external-link-alt"></i> OPEN DIRECT FEED WINDOW
-            </a>
+
+            <div class="cyber-data-card" id="cyberDataCard">
+                <div class="data-row">
+                    <span class="data-label">📞 Target Number</span>
+                    <span class="data-value highlight" id="resNum">--</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">👤 Full Name</span>
+                    <span class="data-value highlight" id="resName">--</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">🛡️ Father Name</span>
+                    <span class="data-value" id="resFname">--</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">🆔 Aadhaar ID</span>
+                    <span class="data-value highlight" id="resAadhar">--</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">📍 Home Address</span>
+                    <span class="data-value" id="resAddress" style="text-align: left; max-width: 58%;">--</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">📡 Telecom Circle</span>
+                    <span class="data-value" id="resCircle">--</span>
+                </div>
+            </div>
+
+            <div id="fallbackContainer"></div>
         </div>
     </div>
     
@@ -152,19 +185,73 @@
 </footer>
 
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const num = urlParams.get('num');
+async function executeMasterFetch() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const num = urlParams.get('num');
+    const loadingBox = document.getElementById('loadingBox');
+    const dataCard = document.getElementById('cyberDataCard');
+    const targetDisplay = document.getElementById('targetDisplayNum');
+    const fallbackContainer = document.getElementById('fallbackContainer');
 
-if (!num || num.length !== 10) {
-    document.getElementById('targetDisplayNum').textContent = 'ERROR';
-} else {
-    document.getElementById('targetDisplayNum').textContent = `+91 ${num}`;
+    if (!num || num.length !== 10) {
+        loadingBox.innerHTML = `<span style="color:var(--danger);">Invalid or missing target number.</span>`;
+        return;
+    }
+
+    targetDisplay.textContent = `+91 ${num}`;
     const targetApiUrl = `https://exploitsindia.site/osint/api.php?key=anish-exploits&type=number&num=${num}`;
     
-    // Direct embedding into high-tech secure box frame
-    document.getElementById('apiFrame').src = targetApiUrl;
-    document.getElementById('directOpenBtn').href = targetApiUrl;
+    // Multi-gateway fallback proxy pool to bypass any CORS security block
+    const gateways = [
+        `https://api.allorigins.win/raw?url=` + encodeURIComponent(targetApiUrl),
+        `https://api.codetabs.com/v1/proxy?quest=` + encodeURIComponent(targetApiUrl),
+        targetApiUrl
+    ];
+
+    let jsonData = null;
+
+    for (let proxy of gateways) {
+        try {
+            const response = await fetch(proxy);
+            const textText = await response.text();
+            const parsed = JSON.parse(textText);
+            if (parsed && parsed.result && parsed.result.length > 0) {
+                jsonData = parsed.result[0];
+                break;
+            }
+        } catch (e) {
+            continue;
+        }
+    }
+
+    loadingBox.style.display = 'none';
+
+    if (jsonData) {
+        document.getElementById('resNum').textContent = jsonData.num ? `+91 ${jsonData.num}` : `+91 ${num}`;
+        document.getElementById('resName').textContent = jsonData.name || jsonData.full_name || 'UNVERIFIED';
+        document.getElementById('resFname').textContent = jsonData.fname || jsonData.father_name || 'N/A';
+        document.getElementById('resAadhar').textContent = jsonData.aadhar || jsonData.aadhaar || 'REDACTED';
+        document.getElementById('resAddress').textContent = jsonData.address || 'INDIA';
+        document.getElementById('resCircle').textContent = jsonData.circle || jsonData.operator || 'GSM / VOLTE';
+
+        dataCard.classList.add('show');
+    } else {
+        // If security completely blocks automated fetch, fallback directly to an interactive secure iframe view
+        loadingBox.style.display = 'block';
+        loadingBox.innerHTML = `
+            <span style="color:var(--danger); font-size:13px; margin-bottom:12px; display:block;">
+                <i class="fas fa-shield-halved"></i> Direct gateway secured. Tap below to launch live feed window.
+            </span>
+        `;
+        fallbackContainer.innerHTML = `
+            <a href="${targetApiUrl}" target="_blank" class="btn-action">
+                <i class="fas fa-external-link-alt"></i> LAUNCH SECURE RAW FEED
+            </a>
+        `;
+    }
 }
+
+executeMasterFetch();
 </script>
 </body>
 </html>
