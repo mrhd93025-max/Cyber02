@@ -52,6 +52,18 @@
         /* SOCIAL TAB */
         .insta-card { background: linear-gradient(45deg, #1e293b, #0f172a); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; border: 1px solid #334155; }
         .insta-btn { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding: 12px 25px; border-radius: 30px; color: white; text-decoration: none; font-weight: bold; font-size: 14px; margin-top: 10px; }
+
+        /* --- AUTO FIT & FAST LOAD IMAGE CSS --- */
+.tool-card img, .card img, [class*="card"] img {
+    width: 100% !important;
+    height: 180px !important; 
+    object-fit: contain !important; 
+    object-position: center !important; 
+    background-color: #0b1120 !important; 
+    image-rendering: -webkit-optimize-contrast !important; 
+}
+/* -------------------------------------- */
+
     </style>
 </head>
 <body>
