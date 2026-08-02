@@ -3,67 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patel Cyber Security - Access</title>
+    <title>System Login - Patel Cyber</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Courier New', Courier, monospace; background: #020617; color: #e0f2fe; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
-        /* Futuristic Background Glow */
-        body::before { content: ''; position: absolute; width: 300px; height: 300px; background: #38bdf8; filter: blur(150px); opacity: 0.2; border-radius: 50%; z-index: -1; }
+        body {
+            margin: 0; padding: 0; background-color: #050914; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Courier New', Courier, monospace;
+            background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
         
-        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); padding: 40px; border-radius: 15px; width: 320px; text-align: center; border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(56, 189, 248, 0.1); }
-        h2 { color: #38bdf8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; text-shadow: 0 0 10px rgba(56,189,248,0.6); }
+        .login-card {
+            background: rgba(10, 15, 30, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(6, 182, 212, 0.3); padding: 40px; border-radius: 20px; width: 320px; text-align: center;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15), inset 0 0 20px rgba(6, 182, 212, 0.1);
+            position: relative; overflow: hidden;
+        }
         
-        input { width: 90%; padding: 14px; margin: 12px 0; background: rgba(2, 6, 23, 0.7); border: 1px solid #1e293b; color: #fff; border-radius: 8px; outline: none; transition: 0.3s; font-family: 'Courier New', Courier, monospace; }
-        input:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+        .login-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+            animation: scanline 2s linear infinite;
+        }
         
-        button { width: 98%; padding: 14px; background: linear-gradient(90deg, #0284c7, #38bdf8); border: none; color: white; font-weight: bold; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 15px; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px; }
-        button:hover { box-shadow: 0 0 15px #38bdf8; transform: scale(1.02); }
-        
-        .error { color: #f43f5e; font-size: 14px; margin-top: 15px; text-shadow: 0 0 5px rgba(244, 63, 94, 0.5); }
+        @keyframes scanline { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .icon-circle {
+            width: 70px; height: 70px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            border: 2px solid #06b6d4; box-shadow: 0 0 15px #06b6d4;
+        }
+        .icon-circle svg { fill: #06b6d4; width: 35px; height: 35px; }
+
+        h2 { font-family: 'Orbitron', sans-serif; color: #fff; margin: 0 0 5px 0; letter-spacing: 2px; font-size: 22px; text-shadow: 0 0 10px rgba(6, 182, 212, 0.8); }
+        p { color: #94a3b8; font-size: 12px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .input-group { position: relative; margin-bottom: 15px; }
+        input {
+            width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.5); border: 1px solid #1e293b; color: #06b6d4; font-size: 14px; border-radius: 10px; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; outline: none; transition: 0.3s;
+        }
+        input::placeholder { color: #475569; }
+        input:focus { border-color: #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.3); }
+
+        button {
+            width: 100%; padding: 15px; background: #06b6d4; color: #000; border: none; border-radius: 10px; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; margin-top: 10px;
+        }
+        button:hover { background: #fff; box-shadow: 0 0 20px #06b6d4; transform: scale(1.02); }
+
+        .error { color: #ef4444; font-size: 12px; margin-top: 15px; display: none; font-weight: bold; text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
     </style>
 </head>
 <body>
 
-<div class="glass-panel">
-    <h2>Cyber Access</h2>
-    <input type="text" id="username" placeholder="[ Enter Identity ]">
-    <input type="password" id="access-password" placeholder="[ Authentication Key ]">
-    <button onclick="verifyAccess()">Initialize</button>
-    <div id="error-msg" class="error"></div>
+<div class="login-card">
+    <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm-2.999 5h11.998l.001 8H6V12z"/></svg>
+    </div>
+    <h2>SECURE NODE</h2>
+    <p>Authentication Required</p>
+
+    <div class="input-group">
+        <input type="text" id="username" placeholder="Enter Your Name">
+    </div>
+    <div class="input-group">
+        <input type="password" id="access-password" placeholder="Access Password">
+    </div>
+    
+    <button onclick="verifyAccess()" id="login-btn">DECRYPT & ENTER</button>
+    <div id="error-msg" class="error">Access Denied!</div>
 </div>
 
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-    
-    // Auto-configured keys (Checked and fixed)
     const supabase = createClient('https://eatolkikwxsqlhkitdlj.supabase.co', 'sb_publishable_YOwpG31mpFqkI4NBRPU8GQ_We-8lGun');
 
     window.verifyAccess = async function() {
         const name = document.getElementById("username").value.trim();
         const pass = document.getElementById("access-password").value.trim();
         const errorDiv = document.getElementById("error-msg");
+        const btn = document.getElementById("login-btn");
 
-        if(!name || !pass) { errorDiv.innerText = "Error: Missing Credentials!"; return; }
+        if(!name || !pass) { 
+            errorDiv.innerText = "IDENTITY UNKNOWN"; 
+            errorDiv.style.display = "block"; 
+            return; 
+        }
 
-        errorDiv.innerText = "Authenticating...";
-        errorDiv.style.color = "#38bdf8";
+        btn.innerText = "VERIFYING...";
+        errorDiv.style.display = "none";
 
         try {
             const { data, error } = await supabase.from('settings').select('tool_password').limit(1);
-            if (error) throw error;
             
             if(pass === data[0].tool_password) {
                 const dateStr = new Date().toLocaleString();
                 await supabase.from('access_logs').insert([{ name: name, login_time: dateStr }]);
-                
                 localStorage.setItem("patel_user", name);
-                window.location.href = "patel-tools.html";
+                
+                btn.innerText = "ACCESS GRANTED";
+                btn.style.background = "#10b981";
+                btn.style.boxShadow = "0 0 20px #10b981";
+                setTimeout(() => { window.location.href = "patel-tools.html"; }, 800);
             } else {
-                errorDiv.style.color = "#f43f5e";
-                errorDiv.innerText = "Access Denied: Invalid Key";
+                errorDiv.innerText = "INVALID KEY. INTRUDER ALERT.";
+                errorDiv.style.display = "block";
+                btn.innerText = "DECRYPT & ENTER";
             }
         } catch (e) {
-            errorDiv.style.color = "#f43f5e";
-            errorDiv.innerText = "System Error: " + e.message;
+            errorDiv.innerText = "SYSTEM ERROR";
+            errorDiv.style.display = "block";
+            btn.innerText = "DECRYPT & ENTER";
         }
     }
 </script>
