@@ -7,159 +7,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep: #020617;
-            --bg-card: #090d19;
-            --border-glow: rgba(6, 182, 212, 0.4);
-            --primary: #06b6d4;
-            --secondary: #3b82f6;
-            --accent: #10b981;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --danger: #ef4444;
-        }
-
+        :root { --bg-deep: #020617; --bg-card: #090d19; --border-glow: rgba(6, 182, 212, 0.4); --primary: #06b6d4; --secondary: #3b82f6; --accent: #10b981; --text-main: #f8fafc; --text-muted: #94a3b8; --danger: #ef4444; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        body {
-            background: var(--bg-deep);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.12) 0%, transparent 40%);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        body { background: var(--bg-deep); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; background-image: radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.12) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.12) 0%, transparent 40%); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-        .disclaimer-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.96); z-index: 9999;
-            display: flex; justify-content: center; align-items: center; backdrop-filter: blur(15px);
-            transition: all 0.5s ease;
-        }
+        .disclaimer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.96); z-index: 9999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(15px); transition: all 0.5s ease; }
         .disclaimer-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        .disclaimer-box {
-            background: var(--bg-card); border: 1px solid var(--border-glow);
-            box-shadow: 0 0 60px rgba(6, 182, 212, 0.25);
-            border-radius: 24px; padding: 40px 30px; max-width: 480px; width: 90%; text-align: center;
-        }
+        .disclaimer-box { background: var(--bg-card); border: 1px solid var(--border-glow); box-shadow: 0 0 60px rgba(6, 182, 212, 0.25); border-radius: 24px; padding: 40px 30px; max-width: 480px; width: 90%; text-align: center; }
         .disclaimer-box .icon-big { font-size: 50px; color: var(--primary); margin-bottom: 15px; display: block; text-shadow: 0 0 20px var(--primary); }
         .disclaimer-box h2 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 15px; }
         .disclaimer-box .content { color: var(--text-muted); font-size: 13px; line-height: 1.7; margin-bottom: 25px; text-align: left; }
-        
-        .btn-accept {
-            width: 100%; padding: 14px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700;
-            cursor: pointer; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(6,182,212,0.4);
-        }
-
-        .main-header {
-            width: 100%; background: rgba(9, 13, 25, 0.85); backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255,255,255,0.08); padding: 15px 20px;
-            position: sticky; top: 0; z-index: 100;
-        }
+        .btn-accept { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+        .main-header { width: 100%; background: rgba(9, 13, 25, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 15px 20px; position: sticky; top: 0; z-index: 100; }
         .header-container { max-width: 650px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        
         .brand-box { display: flex; align-items: center; gap: 14px; }
-        .brand-logo-wrap {
-            width: 50px; height: 50px; border-radius: 14px;
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px rgba(6,182,212,0.4); border: 1px solid rgba(255,255,255,0.2);
-        }
+        .brand-logo-wrap { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(6,182,212,0.4); border: 1px solid rgba(255,255,255,0.2); }
         .brand-logo-wrap i { font-size: 22px; color: #fff; }
-        
         .brand-title h1 { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: 1px; }
         .brand-title span { font-size: 10px; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
-
-        .system-status {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(16, 185, 129, 0.1); padding: 6px 14px; border-radius: 20px;
-            border: 1px solid rgba(16, 185, 129, 0.3); font-size: 11px; color: var(--accent); font-weight: 600;
-        }
+        .system-status { display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 11px; color: var(--accent); font-weight: 600; }
         .system-status .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); }
-
         .main-container { max-width: 650px; width: 100%; padding: 20px; margin-bottom: 40px; }
-
-        .card {
-            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 22px; box-shadow: 0 25px 60px rgba(0,0,0,0.7); overflow: hidden;
-            position: relative;
-        }
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
+        .card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; box-shadow: 0 25px 60px rgba(0,0,0,0.7); overflow: hidden; position: relative; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); }
         .card-body { padding: 30px; }
-
         .form-group { margin-bottom: 22px; }
         .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .input-group {
-            display: flex; align-items: center; background: #020617;
-            border: 2px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden;
-        }
+        .input-group { display: flex; align-items: center; background: #020617; border: 2px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
         .country-code { padding: 15px 18px; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.08); font-weight: 700; color: var(--text-muted); }
         .input-group input { flex: 1; background: transparent; border: none; padding: 15px; color: #fff; font-size: 16px; outline: none; letter-spacing: 1px; }
-
-        .btn-action {
-            width: 100%; padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; border-radius: 14px; color: #fff; font-size: 15px; font-weight: 700;
-            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;
-            font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
-            box-shadow: 0 5px 20px rgba(6,182,212,0.3); transition: 0.3s;
-        }
+        .btn-action { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 14px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; box-shadow: 0 5px 20px rgba(6,182,212,0.3); transition: 0.3s; }
         .btn-action:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(6,182,212,0.5); }
-
-        .result-box {
-            margin-top: 25px; background: #020617;
-            border: 1px solid var(--border-glow); border-radius: 16px; padding: 22px; text-align: center; display: none;
-        }
+        .result-box { margin-top: 25px; background: #020617; border: 1px solid var(--border-glow); border-radius: 16px; padding: 22px; text-align: center; display: none; }
         .result-box.show { display: block; }
         .timer-box { font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--primary); letter-spacing: 1px; }
 
-        /* NEW CYBER TOOLS BUTTON STYLES */
+        /* THE NEW ULTRA PRIVATE ACCESS BUTTON */
         .btn-private-access {
-            display: flex; justify-content: center; align-items: center; gap: 12px;
-            width: 100%; padding: 18px; margin-top: 25px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--accent);
-            border-radius: 14px; color: var(--accent);
-            font-size: 15px; font-weight: 800; text-decoration: none;
-            font-family: 'Orbitron', sans-serif; letter-spacing: 1.5px;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15), inset 0 0 10px rgba(16, 185, 129, 0.1);
-            transition: all 0.4s ease;
-            text-transform: uppercase;
+            position: relative; display: flex; justify-content: center; align-items: center; gap: 12px;
+            width: 100%; padding: 22px; margin-top: 30px;
+            background: linear-gradient(90deg, #020617, #064e3b, #020617); background-size: 200% 100%;
+            border: 2px solid #10b981; border-radius: 16px; color: #10b981;
+            font-size: 16px; font-weight: 800; text-decoration: none;
+            font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 15px rgba(16, 185, 129, 0.2);
+            transition: all 0.4s ease; overflow: hidden; text-transform: uppercase;
+            animation: gradientMove 3s infinite alternate;
         }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        .btn-private-access::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
+            transform: skewX(-20deg); animation: laserScan 2.5s infinite;
+        }
+        @keyframes laserScan { 0% { left: -100%; } 100% { left: 200%; } }
         .btn-private-access:hover {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-            transform: translateY(-3px);
-            border-color: transparent;
+            background: #10b981; color: #fff; box-shadow: 0 0 40px rgba(16, 185, 129, 0.8);
+            transform: scale(1.02); border-color: #fff;
         }
+        .badge-new {
+            position: absolute; top: -12px; right: -5px; background: #ef4444; color: #fff;
+            font-size: 11px; padding: 5px 10px; border-radius: 20px; font-weight: bold;
+            box-shadow: 0 0 15px #ef4444; animation: pulseBadge 1s infinite alternate; z-index: 10; border: 1px solid #fff;
+        }
+        @keyframes pulseBadge { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
 
         .footer { text-align: center; padding: 25px 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06); width: 100%; margin-top: auto; letter-spacing: 1px; }
         .owners-box { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 10px; }
-        .owner-badge {
-            font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 800; color: var(--primary);
-            text-shadow: 0 0 10px rgba(6,182,212,0.5); background: rgba(6,182,212,0.08);
-            padding: 7px 16px; border-radius: 12px; border: 1px solid rgba(6,182,212,0.35);
-        }
+        .owner-badge { font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 800; color: var(--primary); text-shadow: 0 0 10px rgba(6,182,212,0.5); background: rgba(6,182,212,0.08); padding: 7px 16px; border-radius: 12px; border: 1px solid rgba(6,182,212,0.35); }
         .error-text { color: var(--danger); font-size: 12px; margin-top: 8px; display: none; }
     </style>
 </head>
@@ -181,15 +97,9 @@
     <div class="header-container">
         <div class="brand-box">
             <div class="brand-logo-wrap"><i class="fas fa-shield-cat"></i></div>
-            <div class="brand-title">
-                <h1>PATEL CYBER</h1>
-                <span>NEXT GEN OSINT</span>
-            </div>
+            <div class="brand-title"><h1>PATEL CYBER</h1><span>NEXT GEN OSINT</span></div>
         </div>
-        <div class="system-status">
-            <div class="dot"></div>
-            <span>SECURE LIVE</span>
-        </div>
+        <div class="system-status"><div class="dot"></div><span>SECURE LIVE</span></div>
     </div>
 </header>
 
@@ -205,20 +115,16 @@
                     </div>
                     <div class="error-text" id="errorText">Please enter a valid 10-digit number</div>
                 </div>
-                <button type="submit" class="btn-action" id="trackBtn">
-                    <i class="fas fa-satellite-dish"></i> EXECUTE OSINT SCAN
-                </button>
+                <button type="submit" class="btn-action" id="trackBtn"><i class="fas fa-satellite-dish"></i> EXECUTE OSINT SCAN</button>
             </form>
-
-            <div class="result-box" id="resultBox">
-                <div class="timer-box" id="timerText"><i class="fas fa-spinner fa-spin"></i> INITIALIZING SECURE REDIRECT... (3s)</div>
-            </div>
+            <div class="result-box" id="resultBox"><div class="timer-box" id="timerText"><i class="fas fa-spinner fa-spin"></i> INITIALIZING SECURE REDIRECT... (3s)</div></div>
         </div>
     </div>
 
-    <!-- NEW PATEL CYBER TOOLS BUTTON -->
+    <!-- UPGRADED PRIVATE TOOL BUTTON WITH BADGE -->
     <a href="patel-login.html" class="btn-private-access">
-        <i class="fas fa-lock"></i> Access Private Cyber Tools
+        <div class="badge-new">🔥 NEW</div>
+        <i class="fas fa-lock"></i> ACCESS PRIVATE CYBER TOOLS
     </a>
 </div>
 
@@ -232,18 +138,9 @@
 </footer>
 
 <script>
-document.getElementById('acceptBtn').onclick = () => {
-    document.getElementById('disclaimerOverlay').classList.add('hidden');
-    sessionStorage.setItem('disclaimerShown', 'true');
-};
-if (sessionStorage.getItem('disclaimerShown') === 'true') {
-    document.getElementById('disclaimerOverlay').classList.add('hidden');
-}
-
-document.getElementById('phoneInput').addEventListener('input', function() {
-    this.value = this.value.replace(/[^0-9]/g, '');
-});
-
+document.getElementById('acceptBtn').onclick = () => { document.getElementById('disclaimerOverlay').classList.add('hidden'); sessionStorage.setItem('disclaimerShown', 'true'); };
+if (sessionStorage.getItem('disclaimerShown') === 'true') { document.getElementById('disclaimerOverlay').classList.add('hidden'); }
+document.getElementById('phoneInput').addEventListener('input', function() { this.value = this.value.replace(/[^0-9]/g, ''); });
 document.getElementById('trackForm').onsubmit = (e) => {
     e.preventDefault();
     const number = document.getElementById('phoneInput').value.trim();
@@ -251,25 +148,13 @@ document.getElementById('trackForm').onsubmit = (e) => {
     const trackBtn = document.getElementById('trackBtn');
     const resultBox = document.getElementById('resultBox');
     const timerText = document.getElementById('timerText');
-
-    if (number.length !== 10) {
-        errorText.style.display = 'block';
-        resultBox.style.display = 'none';
-        return;
-    }
-    errorText.style.display = 'none';
-    trackBtn.disabled = true;
-    resultBox.style.display = 'block';
-
+    if (number.length !== 10) { errorText.style.display = 'block'; resultBox.style.display = 'none'; return; }
+    errorText.style.display = 'none'; trackBtn.disabled = true; resultBox.style.display = 'block';
     let timeLeft = 3;
     const countdown = setInterval(() => {
         timeLeft--;
-        if (timeLeft > 0) {
-            timerText.innerHTML = `<i class="fas fa-spinner fa-spin"></i> SECURING NODE CONNECTION... (${timeLeft}s)`;
-        } else {
-            clearInterval(countdown);
-            window.location.href = `result.html?num=${number}`;
-        }
+        if (timeLeft > 0) { timerText.innerHTML = `<i class="fas fa-spinner fa-spin"></i> SECURING NODE CONNECTION... (${timeLeft}s)`; } 
+        else { clearInterval(countdown); window.location.href = `result.html?num=${number}`; }
     }, 1000);
 };
 </script>
