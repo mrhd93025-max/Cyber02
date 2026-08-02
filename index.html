@@ -132,6 +132,27 @@
         .result-box.show { display: block; }
         .timer-box { font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--primary); letter-spacing: 1px; }
 
+        /* NEW CYBER TOOLS BUTTON STYLES */
+        .btn-private-access {
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+            width: 100%; padding: 18px; margin-top: 25px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--accent);
+            border-radius: 14px; color: var(--accent);
+            font-size: 15px; font-weight: 800; text-decoration: none;
+            font-family: 'Orbitron', sans-serif; letter-spacing: 1.5px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15), inset 0 0 10px rgba(16, 185, 129, 0.1);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+        }
+        .btn-private-access:hover {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            transform: translateY(-3px);
+            border-color: transparent;
+        }
+
         .footer { text-align: center; padding: 25px 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06); width: 100%; margin-top: auto; letter-spacing: 1px; }
         .owners-box { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 10px; }
         .owner-badge {
@@ -194,6 +215,11 @@
             </div>
         </div>
     </div>
+
+    <!-- NEW PATEL CYBER TOOLS BUTTON -->
+    <a href="patel-login.html" class="btn-private-access">
+        <i class="fas fa-lock"></i> Access Private Cyber Tools
+    </a>
 </div>
 
 <footer class="footer">
