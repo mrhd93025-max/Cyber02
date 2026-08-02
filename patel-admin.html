@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patel Cyber - Command Center</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #020617; color: #f1f5f9; padding: 20px; margin: 0; }
+        .container { max-width: 950px; margin: auto; }
+        .header-title { color: #38bdf8; font-size: 28px; text-transform: uppercase; border-bottom: 2px solid #1e293b; padding-bottom: 15px; margin-bottom: 30px; letter-spacing: 2px; }
+        
+        .card-box { background: rgba(15, 23, 42, 0.7); padding: 25px; margin-bottom: 25px; border-radius: 10px; border: 1px solid #1e293b; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        h3 { color: #10b981; margin-top: 0; font-size: 18px; text-transform: uppercase; }
+        
+        input { width: 100%; padding: 12px; margin: 10px 0 15px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box; }
+        input:focus { outline: none; border-color: #10b981; }
+        
+        button { padding: 12px 25px; background: #10b981; color: white; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        button:hover { background: #059669; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #0f172a; border-radius: 8px; overflow: hidden; }
+        th, td { border-bottom: 1px solid #1e293b; padding: 12px 15px; text-align: left; }
+        th { background: #1e293b; color: #38bdf8; text-transform: uppercase; font-size: 14px; }
+        tr:hover { background: #1e293b; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-title">Command Center</div>
+    
+    <div class="card-box">
+        <h3 style="color: #f43f5e;">Security: Change Access Password</h3>
+        <input type="text" id="new-password" placeholder="Enter new global password">
+        <button style="background: #f43f5e;" onclick="updatePassword()">Update Protocol</button>
+    </div>
+
+    <div class="card-box">
+        <h3>Deploy New Tool</h3>
+        <input type="text" id="tool-name" placeholder="Tool Title (e.g. IP Scanner)">
+        <input type="text" id="tool-url" placeholder="Target URL (https://...)">
+        <input type="text" id="tool-desc" placeholder="Brief Description">
+        <button onclick="addTool()">Deploy Now</button>
+    </div>
+
+    <div class="card-box">
+        <h3 style="color: #8b5cf6;">Access Logs (Live Tracking)</h3>
+        <table>
+            <thead><tr><th>Identity (Name)</th><th>Timestamp</th></tr></thead>
+            <tbody id="logs-table"></tbody>
+        </table>
+    </div>
+</div>
+
+<script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+    const supabase = createClient('https://eatolkikwxsqlhkitdlj.supabase.co', 'sb_publishable_YOwpG31mpFqkI4NBRPU8GQ_We-8lGun');
+
+    window.updatePassword = async function() {
+        const newPass = document.getElementById("new-password").value.trim();
+        if(!newPass) return alert("Enter password!");
+        const { error } = await supabase.from('settings').update({ tool_password: newPass }).eq('id', 1);
+        if(error) alert("Error: " + error.message);
+        else alert("Security Protocol Updated!");
+    }
+
+    window.addTool = async function() {
+        const name = document.getElementById("tool-name").value.trim();
+        const url = document.getElementById("tool-url").value.trim();
+        const desc = document.getElementById("tool-desc").value.trim() || "Advanced Cyber Utility";
+        
+        if(!name || !url) return alert("Name and URL are required!");
+        
+        // Auto generates a cool futuristic banner based on the tool name
+        const img = `https://via.placeholder.com/600x300/020617/38bdf8?text=${encodeURIComponent(name.toUpperCase())}`;
+        
+        const { error } = await supabase.from('tools').insert([{ name, url, description: desc, image: img }]);
+        if(error) alert("Error: " + error.message);
+        else {
+            alert("Tool Deployed Successfully!");
+            location.reload();
+        }
+    }
+
+    async function loadLogs() {
+        const { data } = await supabase.from('access_logs').select('*').order('id', { ascending: false });
+        const tbody = document.getElementById("logs-table");
+        data.forEach(log => {
+            tbody.innerHTML += `<tr><td style="color:#e2e8f0; font-weight:bold;">${log.name}</td><td style="color:#94a3b8;">${log.login_time}</td></tr>`;
+        });
+    }
+    loadLogs();
+</script>
+</body>
+</html>
