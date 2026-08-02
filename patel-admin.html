@@ -10,147 +10,130 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        #admin-login-screen { display: flex; justify-content: center; align-items: center; height: 100vh; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); padding: 20px; }
-        .lock-box { background: rgba(15, 23, 42, 0.8); padding: 40px 30px; border-radius: 20px; border: 1px solid #06b6d4; box-shadow: 0 0 30px rgba(6, 182, 212, 0.2); text-align: center; width: 100%; max-width: 400px; backdrop-filter: blur(10px); }
-        .lock-box i { font-size: 50px; color: #06b6d4; margin-bottom: 15px; text-shadow: 0 0 15px #06b6d4; }
-        .lock-box h2 { color: #fff; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; }
+        #admin-login-screen { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
+        .lock-box { background: rgba(15, 23, 42, 0.8); padding: 40px 30px; border-radius: 20px; border: 1px solid #06b6d4; text-align: center; width: 100%; max-width: 400px; }
+        .lock-box h2 { color: #fff; margin-bottom: 25px; font-family: 'Orbitron'; }
         
-        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #1e293b; color: #fff; border-radius: 12px; outline: none; transition: 0.3s; }
-        input:focus, select:focus { border-color: #06b6d4; box-shadow: 0 0 10px rgba(6, 182, 212, 0.3); }
-        button { width: 100%; padding: 15px; background: #06b6d4; color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; font-family: 'Orbitron', sans-serif; }
-        button:hover { background: #fff; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #1e293b; color: #fff; border-radius: 12px; outline: none; }
+        input:focus, select:focus { border-color: #06b6d4; }
+        button { width: 100%; padding: 15px; background: #06b6d4; color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-family: 'Orbitron'; }
         .btn-danger { background: #ef4444; color: white; }
         .btn-success { background: #10b981; color: white; }
+        .btn-warning { background: #f59e0b; color: white; }
         .btn-small { padding: 8px 12px; font-size: 12px; width: auto; border-radius: 8px; margin: 2px; }
         .badge-vip { background: #f59e0b; color: #000; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-left: 5px; }
 
         #admin-panel { display: none; height: 100vh; flex-direction: column; }
-        .top-nav { background: rgba(15, 23, 42, 0.95); padding: 15px 10px; border-bottom: 1px solid #1e293b; display: flex; gap: 10px; overflow-x: auto; white-space: nowrap; position: sticky; top: 0; z-index: 100; scrollbar-width: none; }
-        .nav-btn { background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 10px 20px; border-radius: 30px; font-size: 13px; display: flex; align-items: center; gap: 8px; width: auto; }
+        .top-nav { background: rgba(15, 23, 42, 0.95); padding: 15px 10px; display: flex; gap: 10px; overflow-x: auto; white-space: nowrap; position: sticky; top: 0; }
+        .nav-btn { background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 10px 20px; border-radius: 30px; font-size: 13px; width: auto; }
         .nav-btn.active { background: rgba(6, 182, 212, 0.1); border-color: #06b6d4; color: #06b6d4; }
 
         .content-area { padding: 20px; flex: 1; overflow-y: auto; }
-        .tab-section { display: none; animation: fadeIn 0.4s ease; }
+        .tab-section { display: none; }
         .tab-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
+        
         .card { background: #0f172a; padding: 20px; border-radius: 16px; border: 1px solid #1e293b; margin-bottom: 20px; }
-        .card h3 { color: #06b6d4; margin-bottom: 20px; font-family: 'Orbitron'; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
-        
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .stat-box { background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); padding: 20px; border-radius: 16px; text-align: center; }
-        .stat-box h1 { color: #fff; font-size: 32px; font-family: 'Orbitron'; }
-        
+        .card h3 { color: #06b6d4; font-family: 'Orbitron'; border-bottom: 1px solid #1e293b; padding-bottom: 10px; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; min-width: 100%; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1e293b; font-size: 14px; }
-        th { color: #94a3b8; font-size: 12px; text-transform: uppercase; }
-        
-        #toast { visibility: hidden; min-width: 250px; background-color: #10b981; color: #fff; text-align: center; border-radius: 30px; padding: 12px 20px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; font-weight: bold; transform: translateX(-50%); opacity: 0; transition: 0.3s; }
-        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        th { color: #94a3b8; font-size: 12px; }
+
+        /* EDIT MODAL */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-content { background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid #f59e0b; width: 100%; max-width: 400px; }
+        .modal-content h3 { color: #f59e0b; font-family: 'Orbitron'; margin-bottom: 15px; }
+
+        #toast { visibility: hidden; min-width: 250px; background: #10b981; color: #fff; text-align: center; border-radius: 30px; padding: 12px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: bold; }
+        #toast.show { visibility: visible; }
     </style>
 </head>
 <body>
 
 <div id="toast"><span id="toast-msg"></span></div>
 
-<!-- LOGIN SCREEN -->
 <div id="admin-login-screen">
     <div class="lock-box">
-        <i class="fas fa-shield-alt"></i>
         <h2>MASTER ADMIN</h2>
         <input type="password" id="admin-pass" placeholder="Enter Master Password">
         <button onclick="checkAdmin()">AUTHORIZE</button>
     </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div id="admin-panel">
     <div class="top-nav">
-        <button class="nav-btn active" onclick="switchTab('dashboard')"><i class="fas fa-chart-line"></i> Analytics</button>
-        <button class="nav-btn" onclick="switchTab('addTool')"><i class="fas fa-plus-circle"></i> Add Tool</button>
-        <button class="nav-btn" onclick="switchTab('manageTools')"><i class="fas fa-cogs"></i> Manage</button>
-        <button class="nav-btn" onclick="switchTab('logs')"><i class="fas fa-history"></i> Logins</button>
+        <button class="nav-btn active" onclick="switchTab('dashboard')">Analytics</button>
+        <button class="nav-btn" onclick="switchTab('addTool')">Add Tool</button>
+        <button class="nav-btn" onclick="switchTab('manageTools')">Manage Tools</button>
+        <button class="nav-btn" onclick="switchTab('logs')">Logins</button>
     </div>
 
     <div class="content-area">
-        
-        <!-- DASHBOARD (DAILY ANALYTICS) -->
         <div id="dashboard" class="tab-section active">
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <h1 id="total-tools">0</h1>
-                    <p style="color:#94a3b8; font-size:12px;">Total Tools</p>
-                </div>
-                <div class="stat-box" style="border-color: rgba(16, 185, 129, 0.2);">
-                    <h1 id="total-logs" style="color: #10b981;">0</h1>
-                    <p style="color:#94a3b8; font-size:12px;">Total Logins</p>
-                </div>
-            </div>
-
-            <!-- NEW FEATURE: DAILY LOGIN STATS -->
             <div class="card">
                 <h3><i class="fas fa-calendar-check"></i> DAILY LOGIN ACTIVITY</h3>
                 <div style="overflow-x: auto;">
-                    <table>
-                        <thead><tr><th>Date</th><th>Number of Logins</th></tr></thead>
-                        <tbody id="daily-stats-table"></tbody>
-                    </table>
+                    <table><thead><tr><th>Date</th><th>Logins</th></tr></thead><tbody id="daily-stats-table"></tbody></table>
                 </div>
             </div>
         </div>
 
-        <!-- ADD TOOL (WITH PUBLIC/PRIVATE OPTION) -->
         <div id="addTool" class="tab-section">
             <div class="card">
                 <h3><i class="fas fa-rocket"></i> DEPLOY TOOL</h3>
                 <input type="text" id="tool-name" placeholder="Tool Name">
                 <input type="text" id="tool-url" placeholder="Tool Link">
                 <input type="text" id="tool-desc" placeholder="Tool Description">
-                
-                <label style="color:#94a3b8; font-size:12px;">Tool Access Level:</label>
-                <select id="tool-access" style="border-color:#f59e0b; color:#f59e0b; font-weight:bold;">
+                <select id="tool-access" style="color:#f59e0b; font-weight:bold;">
                     <option value="public">🌐 PUBLIC (Visible to Everyone)</option>
                     <option value="private">🔐 VIP PRIVATE (Exclusive Tab)</option>
                 </select>
-
-                <label style="color:#94a3b8; font-size:12px;">Tool Image:</label>
-                <select id="image-preset" onchange="toggleCustomImage()">
+                <select id="image-preset" onchange="toggleCustomImage('add')">
                     <option value="custom">🔗 Put my own Custom Link</option>
                     <option value="auto">Auto Random Image</option>
                 </select>
                 <input type="text" id="tool-img-custom" placeholder="Paste image URL here...">
-                
                 <button class="btn-success" onclick="addTool()">DEPLOY TO SYSTEM</button>
             </div>
         </div>
 
-        <!-- MANAGE TOOLS -->
         <div id="manageTools" class="tab-section">
             <div class="card">
-                <h3><i class="fas fa-tasks"></i> MANAGE TOOLS</h3>
+                <h3><i class="fas fa-tasks"></i> MANAGE & EDIT TOOLS</h3>
                 <div style="overflow-x: auto;">
-                    <table>
-                        <thead><tr><th>Tool</th><th>Action</th></tr></thead>
-                        <tbody id="manage-tools-table"></tbody>
-                    </table>
+                    <table><thead><tr><th>Tool</th><th>Action</th></tr></thead><tbody id="manage-tools-table"></tbody></table>
                 </div>
             </div>
         </div>
 
-        <!-- ACCESS LOGS -->
         <div id="logs" class="tab-section">
             <div class="card">
                 <h3><i class="fas fa-list"></i> LIVE LOGS</h3>
                 <div style="overflow-x: auto;">
-                    <table>
-                        <thead><tr><th>Name</th><th>Time</th></tr></thead>
-                        <tbody id="logs-table"></tbody>
-                    </table>
+                    <table><thead><tr><th>Name</th><th>Time</th></tr></thead><tbody id="logs-table"></tbody></table>
                 </div>
                 <button onclick="clearLogs()" class="btn-danger" style="margin-top:20px;">CLEAR LOGS</button>
             </div>
         </div>
+    </div>
+</div>
 
+<!-- EDIT TOOL MODAL -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+        <h3><i class="fas fa-pen"></i> EDIT TOOL</h3>
+        <input type="hidden" id="edit-id">
+        <input type="text" id="edit-name" placeholder="Tool Name">
+        <input type="text" id="edit-url" placeholder="Tool Link">
+        <input type="text" id="edit-desc" placeholder="Description">
+        <select id="edit-access" style="color:#f59e0b; font-weight:bold;">
+            <option value="public">🌐 PUBLIC</option>
+            <option value="private">🔐 VIP PRIVATE</option>
+        </select>
+        <input type="text" id="edit-img" placeholder="Image URL">
+        <div style="display:flex; gap:10px; margin-top:10px;">
+            <button class="btn-success" onclick="saveEditTool()">UPDATE</button>
+            <button class="btn-danger" onclick="closeEditModal()">CANCEL</button>
+        </div>
     </div>
 </div>
 
@@ -158,6 +141,7 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
     const supabase = createClient('https://eatolkikwxsqlhkitdlj.supabase.co', 'sb_publishable_YOwpG31mpFqkI4NBRPU8GQ_We-8lGun');
     const SECRET_ADMIN_PASS = "PATEL@BOSS"; 
+    let allTools = [];
     
     window.checkAdmin = function() {
         if(document.getElementById("admin-pass").value === SECRET_ADMIN_PASS) {
@@ -177,18 +161,16 @@
     window.showToast = function(msg) {
         const toast = document.getElementById("toast");
         document.getElementById("toast-msg").innerText = msg;
-        toast.className = "show";
-        setTimeout(() => toast.className = toast.className.replace("show", ""), 3000);
+        toast.className = "show"; setTimeout(() => toast.className = "", 3000);
     }
 
-    window.toggleCustomImage = function() {
+    window.toggleCustomImage = function(type) {
         document.getElementById("tool-img-custom").style.display = document.getElementById("image-preset").value === "custom" ? "block" : "none";
     }
 
     async function loadDashboard() {
         const { data: tools } = await supabase.from('tools').select('*').order('id', { ascending: false });
-        document.getElementById("total-tools").innerText = tools.length;
-        
+        allTools = tools;
         const tbodyTools = document.getElementById("manage-tools-table");
         tbodyTools.innerHTML = "";
         tools.forEach(t => {
@@ -199,32 +181,20 @@
             tbodyTools.innerHTML += `
             <tr>
                 <td><strong style="color:#fff;">${t.name}</strong> ${badge}<br><span style="font-size:11px; color:#94a3b8;">${cleanDesc.substring(0,20)}...</span></td>
-                <td>
+                <td style="display:flex; gap:5px;">
+                    <button class="btn-small btn-warning" onclick="openEditModal(${t.id})"><i class="fas fa-pen"></i></button>
                     <button class="btn-small btn-danger" onclick="deleteTool(${t.id})"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>`;
         });
 
         const { data: logs } = await supabase.from('access_logs').select('*').order('id', { ascending: false });
-        document.getElementById("total-logs").innerText = logs.length;
-        
         const tbodyLogs = document.getElementById("logs-table");
         tbodyLogs.innerHTML = "";
         logs.forEach(l => tbodyLogs.innerHTML += `<tr><td><strong>${l.name}</strong></td><td style="color:#94a3b8; font-size:11px;">${l.login_time}</td></tr>`);
 
-        // NEW: DAILY STATS CALCULATOR
-        calculateDailyStats(logs);
-    }
-
-    function calculateDailyStats(logs) {
         const stats = {};
-        logs.forEach(log => {
-            if(!log.login_time) return;
-            // Extract just the Date part from "MM/DD/YYYY, HH:MM"
-            const dateOnly = log.login_time.split(',')[0].trim(); 
-            stats[dateOnly] = (stats[dateOnly] || 0) + 1;
-        });
-
+        logs.forEach(log => { if(log.login_time) { const dateOnly = log.login_time.split(',')[0].trim(); stats[dateOnly] = (stats[dateOnly] || 0) + 1; }});
         const tbodyStats = document.getElementById("daily-stats-table");
         tbodyStats.innerHTML = "";
         for (const [date, count] of Object.entries(stats)) {
@@ -237,23 +207,50 @@
         const url = document.getElementById("tool-url").value.trim();
         let desc = document.getElementById("tool-desc").value.trim() || "Advanced Cyber Utility";
         const access = document.getElementById("tool-access").value;
-        const preset = document.getElementById("image-preset").value;
-        let img = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800"; 
+        let img = document.getElementById("tool-img-custom").value.trim() || "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800"; 
         
         if(!name || !url) return alert("Name and URL required!");
-        if (preset === "custom") img = document.getElementById("tool-img-custom").value.trim() || img;
-        
-        // HACK: If VIP is selected, tag the description so Customer page knows!
         if(access === "private") { desc = "[VIP] " + desc; }
         
         const { error } = await supabase.from('tools').insert([{ name, url, description: desc, image: img }]);
-        if(!error) { showToast("Tool Deployed!"); loadDashboard(); switchTab('manageTools'); document.getElementById('tool-name').value = ''; }
+        if(!error) { showToast("Tool Deployed!"); loadDashboard(); switchTab('manageTools'); }
+    }
+
+    // EDIT TOOL FUNCTIONS
+    window.openEditModal = function(id) {
+        const tool = allTools.find(t => t.id === id);
+        if(!tool) return;
+        let isVip = tool.description && tool.description.includes("[VIP]");
+        
+        document.getElementById("edit-id").value = tool.id;
+        document.getElementById("edit-name").value = tool.name;
+        document.getElementById("edit-url").value = tool.url;
+        document.getElementById("edit-desc").value = tool.description ? tool.description.replace("[VIP] ", "") : "";
+        document.getElementById("edit-access").value = isVip ? "private" : "public";
+        document.getElementById("edit-img").value = tool.image;
+        
+        document.getElementById("editModal").style.display = "flex";
+    }
+
+    window.closeEditModal = function() { document.getElementById("editModal").style.display = "none"; }
+
+    window.saveEditTool = async function() {
+        const id = document.getElementById("edit-id").value;
+        const name = document.getElementById("edit-name").value;
+        const url = document.getElementById("edit-url").value;
+        let desc = document.getElementById("edit-desc").value;
+        const access = document.getElementById("edit-access").value;
+        const img = document.getElementById("edit-img").value;
+        
+        if(access === "private") { desc = "[VIP] " + desc; }
+
+        const { error } = await supabase.from('tools').update({ name, url, description: desc, image: img }).eq('id', id);
+        if(!error) { showToast("Tool Updated!"); closeEditModal(); loadDashboard(); }
     }
 
     window.deleteTool = async function(id) {
         if(confirm("Delete tool?")) { await supabase.from('tools').delete().eq('id', id); loadDashboard(); showToast("Deleted!"); }
     }
-    
     window.clearLogs = async function() {
         if(confirm("Wipe logs?")) { await supabase.from('access_logs').delete().neq('id', 0); loadDashboard(); showToast("Cleared!"); }
     }
