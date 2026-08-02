@@ -3,50 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patel Cyber - Command Center</title>
+    <title>Admin Command Center</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #020617; color: #f1f5f9; padding: 20px; margin: 0; }
-        .container { max-width: 950px; margin: auto; }
-        .header-title { color: #38bdf8; font-size: 28px; text-transform: uppercase; border-bottom: 2px solid #1e293b; padding-bottom: 15px; margin-bottom: 30px; letter-spacing: 2px; }
+        body { font-family: 'Courier New', Courier, monospace; background: #020617; color: #f1f5f9; padding: 20px; margin: 0; }
+        .container { max-width: 950px; margin: auto; display: none; } /* Hidden initially */
         
-        .card-box { background: rgba(15, 23, 42, 0.7); padding: 25px; margin-bottom: 25px; border-radius: 10px; border: 1px solid #1e293b; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        h3 { color: #10b981; margin-top: 0; font-size: 18px; text-transform: uppercase; }
+        /* ADMIN LOGIN SCREEN */
+        #admin-login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh; }
+        .lock-box { background: rgba(15, 23, 42, 0.8); padding: 40px; border-radius: 12px; border: 1px solid #f43f5e; box-shadow: 0 0 20px rgba(244, 63, 94, 0.3); text-align: center; }
+        .lock-box h2 { color: #f43f5e; margin-bottom: 20px; letter-spacing: 2px; }
         
-        input { width: 100%; padding: 12px; margin: 10px 0 15px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box; }
-        input:focus { outline: none; border-color: #10b981; }
-        
-        button { padding: 12px 25px; background: #10b981; color: white; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
-        button:hover { background: #059669; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #0f172a; border-radius: 8px; overflow: hidden; }
-        th, td { border-bottom: 1px solid #1e293b; padding: 12px 15px; text-align: left; }
-        th { background: #1e293b; color: #38bdf8; text-transform: uppercase; font-size: 14px; }
-        tr:hover { background: #1e293b; }
+        input { width: 100%; padding: 12px; margin: 10px 0 15px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #38bdf8; }
+        button { padding: 12px 25px; background: #10b981; color: white; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; width: 100%; transition: 0.3s; text-transform: uppercase; }
+        button:hover { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+
+        /* DASHBOARD STYLES */
+        .card-box { background: rgba(15, 23, 42, 0.7); padding: 25px; margin-bottom: 25px; border-radius: 10px; border: 1px solid #1e293b; }
+        h3 { color: #38bdf8; margin-top: 0; font-size: 18px; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #0f172a; }
+        th, td { border-bottom: 1px solid #1e293b; padding: 12px; text-align: left; }
+        th { color: #38bdf8; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-title">Command Center</div>
+<!-- ADMIN PASSWORD GATE -->
+<div id="admin-login-screen">
+    <div class="lock-box">
+        <h2>RESTRICTED AREA</h2>
+        <p>Enter Admin Code to Access Panel</p>
+        <input type="password" id="admin-pass" placeholder="[ Admin Password ]">
+        <button onclick="checkAdmin()" style="background:#f43f5e;">UNLOCK PANEL</button>
+    </div>
+</div>
+
+<!-- MAIN ADMIN PANEL (HIDDEN BY DEFAULT) -->
+<div class="container" id="admin-panel">
+    <h2 style="color:#38bdf8; border-bottom:1px solid #38bdf8; padding-bottom:10px;">COMMAND CENTER</h2>
     
     <div class="card-box">
-        <h3 style="color: #f43f5e;">Security: Change Access Password</h3>
-        <input type="text" id="new-password" placeholder="Enter new global password">
+        <h3 style="color: #f43f5e;">1. CHANGE CUSTOMER PASSWORD</h3>
+        <input type="text" id="new-password" placeholder="Enter new password for users">
         <button style="background: #f43f5e;" onclick="updatePassword()">Update Protocol</button>
     </div>
 
     <div class="card-box">
-        <h3>Deploy New Tool</h3>
-        <input type="text" id="tool-name" placeholder="Tool Title (e.g. IP Scanner)">
+        <h3>2. DEPLOY NEW TOOL</h3>
+        <input type="text" id="tool-name" placeholder="Tool Title (e.g. Movies Download)">
         <input type="text" id="tool-url" placeholder="Target URL (https://...)">
-        <input type="text" id="tool-desc" placeholder="Brief Description">
-        <button onclick="addTool()">Deploy Now</button>
+        <input type="text" id="tool-desc" placeholder="Tool Description">
+        <input type="text" id="tool-img" placeholder="Image URL (Optional - Leave blank for default hacking image)">
+        <button onclick="addTool()">Deploy Tool</button>
     </div>
 
     <div class="card-box">
-        <h3 style="color: #8b5cf6;">Access Logs (Live Tracking)</h3>
+        <h3 style="color: #8b5cf6;">3. LIVE ACCESS LOGS (Who Logged In)</h3>
         <table>
-            <thead><tr><th>Identity (Name)</th><th>Timestamp</th></tr></thead>
+            <thead><tr><th>Name</th><th>Timestamp</th></tr></thead>
             <tbody id="logs-table"></tbody>
         </table>
     </div>
@@ -56,40 +70,61 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
     const supabase = createClient('https://eatolkikwxsqlhkitdlj.supabase.co', 'sb_publishable_YOwpG31mpFqkI4NBRPU8GQ_We-8lGun');
 
+    // === ADMIN PASSWORD SETTING ===
+    // भाई, आप यहाँ 'PATEL@BOSS' को हटाकर अपना जो भी पासवर्ड रखना चाहते हैं, वो रख सकते हैं।
+    const SECRET_ADMIN_PASS = "PATEL@BOSS"; 
+
+    window.checkAdmin = function() {
+        const pass = document.getElementById("admin-pass").value;
+        if(pass === SECRET_ADMIN_PASS) {
+            document.getElementById("admin-login-screen").style.display = "none";
+            document.getElementById("admin-panel").style.display = "block";
+            loadLogs();
+        } else {
+            alert("WRONG PASSWORD! ACCESS DENIED.");
+        }
+    }
+
     window.updatePassword = async function() {
         const newPass = document.getElementById("new-password").value.trim();
-        if(!newPass) return alert("Enter password!");
+        if(!newPass) return;
         const { error } = await supabase.from('settings').update({ tool_password: newPass }).eq('id', 1);
         if(error) alert("Error: " + error.message);
-        else alert("Security Protocol Updated!");
+        else alert("Customer Password Updated Successfully!");
     }
 
     window.addTool = async function() {
         const name = document.getElementById("tool-name").value.trim();
         const url = document.getElementById("tool-url").value.trim();
         const desc = document.getElementById("tool-desc").value.trim() || "Advanced Cyber Utility";
+        let img = document.getElementById("tool-img").value.trim();
         
         if(!name || !url) return alert("Name and URL are required!");
         
-        // Auto generates a cool futuristic banner based on the tool name
-        const img = `https://via.placeholder.com/600x300/020617/38bdf8?text=${encodeURIComponent(name.toUpperCase())}`;
+        // Default Image logic fix:
+        if(!img) {
+            img = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop"; // Cool matrix hacker background
+        }
         
         const { error } = await supabase.from('tools').insert([{ name, url, description: desc, image: img }]);
         if(error) alert("Error: " + error.message);
         else {
             alert("Tool Deployed Successfully!");
-            location.reload();
+            document.getElementById("tool-name").value = "";
+            document.getElementById("tool-url").value = "";
+            document.getElementById("tool-desc").value = "";
+            document.getElementById("tool-img").value = "";
         }
     }
 
     async function loadLogs() {
-        const { data } = await supabase.from('access_logs').select('*').order('id', { ascending: false });
+        const { data } = await supabase.from('access_logs').select('*').order('id', { ascending: false }).limit(20);
         const tbody = document.getElementById("logs-table");
+        tbody.innerHTML = "";
         data.forEach(log => {
             tbody.innerHTML += `<tr><td style="color:#e2e8f0; font-weight:bold;">${log.name}</td><td style="color:#94a3b8;">${log.login_time}</td></tr>`;
         });
     }
-    loadLogs();
 </script>
 </body>
 </html>
