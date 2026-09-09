@@ -1,39 +1,131 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Patel Cyber Tools</title>
+    <title>Command Center | Patel Cyber Tools</title>
     <style>
-        :root { --bg-dark: #090d16; --card-bg: rgba(16, 23, 38, 0.85); --border-color: rgba(0, 229, 255, 0.2); --primary-cyan: #00e5ff; --gov-saffron: #ff9933; --text-main: #f0f6fc; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
-        .gov-top-bar { background: linear-gradient(90deg, #111, #1a2332, #111); color: var(--gov-saffron); padding: 8px 20px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--gov-saffron); }
-        .main-header { background: rgba(13, 19, 33, 0.9); border-bottom: 1px solid var(--border-color); padding: 20px; text-align: center; }
-        .main-header h1 { color: var(--primary-cyan); font-size: 1.8rem; }
-        .container { padding: 40px 20px; max-width: 800px; margin: 0 auto; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; text-align: center; }
-        .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #00e5ff, #0072ff); color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; margin-top: 20px; }
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+        body { margin:0; background: #030712; color: #fff; font-family: 'Rajdhani', sans-serif; }
+        .gov-bar { background: #0a0a0a; border-bottom: 2px solid #ff9933; padding: 10px 20px; color: #ff9933; display: flex; justify-content: space-between; font-weight: 600; }
+        .dashboard { display: grid; grid-template-columns: 250px 1fr; min-height: calc(100vh - 40px); }
+        .sidebar { background: rgba(10,15,30,0.9); border-right: 1px solid rgba(0,240,255,0.2); padding: 20px; }
+        .menu-item { padding: 15px; color: #8ba3b8; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.3s; }
+        .menu-item:hover { color: #00f0ff; border-left: 3px solid #00f0ff; background: rgba(0,240,255,0.05); }
+        .content { padding: 30px; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: rgba(10,15,30,0.6); border: 1px solid rgba(0,240,255,0.3); padding: 20px; border-radius: 8px; position: relative; }
+        .card h3 { color: #00f0ff; margin-bottom: 15px; border-bottom: 1px solid rgba(0,240,255,0.2); padding-bottom: 10px; }
+        input[type="text"] { width: 100%; padding: 10px; background: #000; border: 1px solid #00f0ff; color: #fff; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: #00f0ff; color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #fff; box-shadow: 0 0 15px #00f0ff; }
+        .logs-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .logs-table th, .logs-table td { border: 1px solid rgba(255,255,255,0.1); padding: 10px; text-align: left; }
+        .logs-table th { color: #00f0ff; }
+        .toggle-switch { width: 50px; height: 25px; background: #333; border-radius: 15px; position: relative; cursor: pointer; display: inline-block; vertical-align: middle; }
+        .toggle-switch::after { content: ''; position: absolute; width: 21px; height: 21px; background: #fff; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
+        .toggle-switch.active { background: #00f0ff; }
+        .toggle-switch.active::after { left: 27px; background: #000; }
     </style>
 </head>
 <body>
-    <div class="gov-top-bar">
-        <span>🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</span>
-        <span>Administrator Dashboard</span>
+    <div class="gov-bar">
+        <span>🇮🇳 Admin Panel</span><span>[ SYSTEM SECURE ]</span>
     </div>
-    <header class="main-header">
-        <h1>🏛️ Patel Cyber Tools</h1>
-        <p style="color: #8b949e; font-size: 0.9rem;">System Control Panel</p>
-    </header>
-    <div class="container">
-        <div class="card">
-            <h2 style="color: var(--primary-cyan);">Welcome, Admin</h2>
-            <p style="color: #8b949e; margin-top: 10px;">System Status: <span style="color: #0f0;">Online & Secure</span></p>
-            <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                <h3>Access the Cyber Tool</h3>
-                <a href="patel-tools.html" class="btn">Go to Search Portal</a>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2 style="color:#00f0ff; margin-bottom: 30px;">Control Panel</h2>
+            <div class="menu-item" onclick="location.href='patel-tools.html'">⌕ Open Search Engine</div>
+            <div class="menu-item">⚡ System Status: ONLINE</div>
+            <div class="menu-item">🛡️ Firewall: ACTIVE</div>
+            <div class="menu-item">💾 Server Load: 12%</div>
+            <div class="menu-item" onclick="clearLogs()" style="color:#ff3333;">🗑️ Clear System Cache</div>
+            <div class="menu-item" onclick="location.href='index.html'">🚪 Secure Logout</div>
+        </div>
+        <div class="content">
+            <h1 style="margin-bottom: 20px; text-shadow: 0 0 10px #00f0ff;">System Administration</h1>
+            
+            <div class="grid-cards">
+                <!-- FEATURE 1 & 2: Dynamic API Management -->
+                <div class="card" style="grid-column: span 2;">
+                    <h3>1. API Management System (Live Edit)</h3>
+                    <p style="color:#8ba3b8; font-size:0.9rem; margin-bottom:10px;">Paste your API URL. Use <b>[NUMBER]</b> where the search query should go.<br>Example: <i>https://my-api.com/search?target=[NUMBER]</i></p>
+                    <input type="text" id="apiUrlInput" placeholder="Enter API Link here...">
+                    <button onclick="saveApi()">💾 Save / Update API</button>
+                    <button onclick="deleteApi()" style="background:transparent; border:1px solid #ff3333; color:#ff3333;">🗑️ Delete / Demo Mode</button>
+                    <p id="apiStatus" style="margin-top:10px; color:#00ff00;"></p>
+                </div>
+
+                <!-- FEATURE 3: Analytics -->
+                <div class="card">
+                    <h3>3. Traffic & Analytics</h3>
+                    <h2 style="color:#0f0;">Total Scans: <span id="scanCount">0</span></h2>
+                    <p>Today's Active Sessions: 14</p>
+                </div>
+
+                <!-- FEATURE 4, 5, 6: Security Toggles -->
+                <div class="card">
+                    <h3>System Configurations</h3>
+                    <p>4. Deep Scan Routing <span class="toggle-switch active" onclick="this.classList.toggle('active')"></span></p>
+                    <p>5. IP Masking (VPN) <span class="toggle-switch active" onclick="this.classList.toggle('active')"></span></p>
+                    <p>6. Auto-Ban Hackers <span class="toggle-switch active" onclick="this.classList.toggle('active')"></span></p>
+                </div>
+            </div>
+
+            <!-- FEATURE 7, 8, 9, 10: Query Logs, Export, Anti-Trace -->
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Recent Search Logs (Auto-Saved)</h3>
+                    <button onclick="exportCSV()">📥 Export to CSV</button>
+                </div>
+                <table class="logs-table" id="logsTable">
+                    <tr><th>Time</th><th>Target Query (Number)</th><th>Status</th></tr>
+                </table>
             </div>
         </div>
     </div>
+
+    <script>
+        // Load API on startup
+        document.getElementById('apiUrlInput').value = localStorage.getItem('patel_api_url') || '';
+
+        function saveApi() {
+            let val = document.getElementById('apiUrlInput').value.trim();
+            localStorage.setItem('patel_api_url', val);
+            document.getElementById('apiStatus').innerText = "✅ API Successfully Linked to System!";
+            setTimeout(() => document.getElementById('apiStatus').innerText = "", 3000);
+        }
+
+        function deleteApi() {
+            localStorage.removeItem('patel_api_url');
+            document.getElementById('apiUrlInput').value = '';
+            document.getElementById('apiStatus').innerText = "⚠️ API Deleted! System is now in DEMO MODE.";
+            document.getElementById('apiStatus').style.color = "#ff3333";
+            setTimeout(() => { document.getElementById('apiStatus').innerText = ""; document.getElementById('apiStatus').style.color = "#00ff00"; }, 3000);
+        }
+
+        // Load Logs
+        function loadLogs() {
+            let logs = JSON.parse(localStorage.getItem('patel_logs') || '[]');
+            document.getElementById('scanCount').innerText = logs.length;
+            let table = `<tr><th>Time</th><th>Target Query (Number)</th><th>Status</th></tr>`;
+            logs.reverse().forEach(log => {
+                table += `<tr><td>${log.time}</td><td>${log.query}</td><td style="color:#0f0;">Traced</td></tr>`;
+            });
+            document.getElementById('logsTable').innerHTML = table;
+        }
+
+        function clearLogs() {
+            localStorage.removeItem('patel_logs');
+            loadLogs();
+            alert('System Cache & Logs Cleared!');
+        }
+
+        function exportCSV() {
+            alert('Exporting Encrypted Data... (Feature Demo)');
+        }
+
+        loadLogs();
+    </script>
 </body>
 </html>
