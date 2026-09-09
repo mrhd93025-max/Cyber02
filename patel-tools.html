@@ -1,43 +1,48 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Tool - Patel Cyber Tools</title>
+    <title>Search | Patel Cyber Tools</title>
     <style>
-        :root { --bg-dark: #090d16; --card-bg: rgba(16, 23, 38, 0.85); --border-color: rgba(0, 229, 255, 0.2); --primary-cyan: #00e5ff; --gov-saffron: #ff9933; --text-main: #f0f6fc; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-        .gov-top-bar { background: linear-gradient(90deg, #111, #1a2332, #111); color: var(--gov-saffron); padding: 8px 20px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--gov-saffron); }
-        .main-header { background: rgba(13, 19, 33, 0.9); border-bottom: 1px solid var(--border-color); padding: 20px; text-align: center; }
-        .main-header h1 { color: var(--primary-cyan); font-size: 1.8rem; }
-        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); border-radius: 12px; padding: 35px; width: 100%; max-width: 600px; text-align: center; }
-        .input-field { width: 100%; padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-size: 1.1rem; margin-bottom: 20px; outline: none; text-align: center; }
-        .input-field:focus { border-color: var(--primary-cyan); box-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
-        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #00e5ff, #0072ff); color: #000; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .btn:hover { box-shadow: 0 0 20px rgba(0, 229, 255, 0.6); }
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+        body { margin:0; background: #030712; color: #fff; font-family: 'Rajdhani', sans-serif; display: flex; flex-direction: column; min-height: 100vh;}
+        .gov-bar { background: #0a0a0a; border-bottom: 2px solid #ff9933; padding: 10px 20px; color: #ff9933; font-weight: bold; }
+        .container { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .search-panel { background: rgba(10,15,30,0.8); border: 1px solid #00f0ff; padding: 50px; border-radius: 10px; width: 600px; text-align: center; box-shadow: 0 0 40px rgba(0,240,255,0.1); }
+        .search-input { width: 100%; padding: 20px; background: #000; border: 2px solid rgba(0,240,255,0.3); color: #00f0ff; font-size: 1.5rem; text-align: center; margin-bottom: 20px; outline: none; border-radius: 8px;}
+        .search-input:focus { border-color: #00f0ff; box-shadow: 0 0 20px rgba(0,240,255,0.4); }
+        .scan-btn { width: 100%; padding: 20px; background: linear-gradient(90deg, #0057ff, #00f0ff); color: #000; font-size: 1.5rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .scan-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,240,255,0.5); color: #fff; }
     </style>
 </head>
 <body>
-    <div class="gov-top-bar">
-        <span>🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</span>
-        <span>Cyber Investigation Node</span>
-    </div>
-    <header class="main-header">
-        <h1>🏛️ Patel Cyber Tools</h1>
-        <p style="color: #8b949e; font-size: 0.9rem;">Live Data Fetch API Terminal</p>
-    </header>
+    <div class="gov-bar">🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</div>
     <div class="container">
-        <div class="card">
-            <h2 style="margin-bottom: 10px;">Information Lookup</h2>
-            <p style="color: #8b949e; margin-bottom: 25px;">Enter Number or Target ID below to scan the secure database.</p>
-            <!-- Ye form redirect karega result.html par -->
-            <form action="result.html" method="GET">
-                <input type="text" name="query" class="input-field" placeholder="Enter Target Number / ID..." required autocomplete="off">
-                <button type="submit" class="btn">SCAN DATABASE</button>
+        <div class="search-panel">
+            <h1 style="color:#fff; text-shadow: 0 0 10px #00f0ff; margin-bottom: 10px;">INTELLIGENCE SCANNER</h1>
+            <p style="color:#8ba3b8; margin-bottom: 30px;">Enter Target Mobile Number / ID to Fetch Details</p>
+            
+            <form onsubmit="handleScan(event)">
+                <input type="text" id="queryInput" class="search-input" placeholder="Enter Number..." required autocomplete="off">
+                <button type="submit" class="scan-btn">Initiate Deep Scan</button>
             </form>
         </div>
     </div>
+
+    <script>
+        function handleScan(e) {
+            e.preventDefault();
+            let query = document.getElementById('queryInput').value;
+            
+            // Save log for Admin Panel
+            let logs = JSON.parse(localStorage.getItem('patel_logs') || '[]');
+            logs.push({ query: query, time: new Date().toLocaleString() });
+            localStorage.setItem('patel_logs', JSON.stringify(logs));
+
+            // Redirect to result page
+            window.location.href = `result.html?query=${encodeURIComponent(query)}`;
+        }
+    </script>
 </body>
 </html>
