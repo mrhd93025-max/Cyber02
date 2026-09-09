@@ -1,44 +1,26 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Patel Cyber Tools</title>
+    <title>Auth | Patel Cyber Tools</title>
     <style>
-        :root { --bg-dark: #090d16; --card-bg: rgba(16, 23, 38, 0.85); --border-color: rgba(0, 229, 255, 0.2); --primary-cyan: #00e5ff; --gov-saffron: #ff9933; --text-main: #f0f6fc; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-        .gov-top-bar { background: linear-gradient(90deg, #111, #1a2332, #111); color: var(--gov-saffron); padding: 8px 20px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--gov-saffron); }
-        .main-header { background: rgba(13, 19, 33, 0.9); border-bottom: 1px solid var(--border-color); padding: 20px; text-align: center; }
-        .main-header h1 { color: var(--primary-cyan); font-size: 1.8rem; }
-        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); border-radius: 12px; padding: 30px; width: 100%; max-width: 400px; }
-        .input-field { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; margin-bottom: 15px; outline: none; }
-        .input-field:focus { border-color: var(--primary-cyan); }
-        .btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #00e5ff, #0072ff); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .btn:hover { box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); }
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+        body { margin:0; background: #030712; color: #fff; font-family: 'Rajdhani', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .auth-card { background: rgba(10,15,30,0.9); border: 1px solid #00f0ff; padding: 40px; border-radius: 10px; width: 400px; text-align: center; box-shadow: 0 0 30px rgba(0,240,255,0.2); }
+        .input-box { width: 100%; padding: 15px; margin-bottom: 20px; background: #000; border: 1px solid rgba(0,240,255,0.3); color: #00f0ff; outline: none; font-size: 1.1rem; }
+        .btn { width: 100%; padding: 15px; background: #00f0ff; border: none; color: #000; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #fff; box-shadow: 0 0 20px #00f0ff; }
     </style>
 </head>
 <body>
-    <div class="gov-top-bar">
-        <span>🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</span>
-        <span>Authorized Access Only</span>
-    </div>
-    <header class="main-header">
-        <h1>🏛️ Patel Cyber Tools</h1>
-        <p style="color: #8b949e; font-size: 0.9rem;">Secure Authentication Portal</p>
-    </header>
-    <div class="container">
-        <div class="card">
-            <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary-cyan);">Admin Login</h2>
-            <form action="patel-admin.html" method="GET">
-                <label style="font-size: 0.9rem; color: #8b949e;">Username / Badge ID</label>
-                <input type="text" class="input-field" placeholder="Enter Username" required>
-                <label style="font-size: 0.9rem; color: #8b949e;">Password</label>
-                <input type="password" class="input-field" placeholder="Enter Password" required>
-                <button type="submit" class="btn">Authenticate</button>
-            </form>
-        </div>
+    <div class="auth-card">
+        <h2 style="color:#00f0ff; margin-bottom: 30px;">ADMIN AUTHENTICATION</h2>
+        <form onsubmit="event.preventDefault(); window.location.href='patel-admin.html';">
+            <input type="text" class="input-box" placeholder="Admin ID" required>
+            <input type="password" class="input-box" placeholder="Access Key" required>
+            <button type="submit" class="btn">GRANT ACCESS</button>
+        </form>
     </div>
 </body>
 </html>
