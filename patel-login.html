@@ -1,116 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Login - Patel Cyber</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
+    <title>Login - Patel Cyber Tools</title>
     <style>
-        body {
-            margin: 0; padding: 0; background-color: #050914; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: 'Courier New', Courier, monospace;
-            background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-        
-        .login-card {
-            background: rgba(10, 15, 30, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(6, 182, 212, 0.3); padding: 40px; border-radius: 20px; width: 320px; text-align: center;
-            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15), inset 0 0 20px rgba(6, 182, 212, 0.1);
-            position: relative; overflow: hidden;
-        }
-        
-        .login-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #06b6d4, transparent);
-            animation: scanline 2s linear infinite;
-        }
-        
-        @keyframes scanline { 0% { left: -100%; } 100% { left: 100%; } }
-
-        .icon-circle {
-            width: 70px; height: 70px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
-            border: 2px solid #06b6d4; box-shadow: 0 0 15px #06b6d4;
-        }
-        .icon-circle svg { fill: #06b6d4; width: 35px; height: 35px; }
-
-        h2 { font-family: 'Orbitron', sans-serif; color: #fff; margin: 0 0 5px 0; letter-spacing: 2px; font-size: 22px; text-shadow: 0 0 10px rgba(6, 182, 212, 0.8); }
-        p { color: #94a3b8; font-size: 12px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
-
-        .input-group { position: relative; margin-bottom: 15px; }
-        input {
-            width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.5); border: 1px solid #1e293b; color: #06b6d4; font-size: 14px; border-radius: 10px; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; outline: none; transition: 0.3s;
-        }
-        input::placeholder { color: #475569; }
-        input:focus { border-color: #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.3); }
-
-        button {
-            width: 100%; padding: 15px; background: #06b6d4; color: #000; border: none; border-radius: 10px; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; margin-top: 10px;
-        }
-        button:hover { background: #fff; box-shadow: 0 0 20px #06b6d4; transform: scale(1.02); }
-
-        .error { color: #ef4444; font-size: 12px; margin-top: 15px; display: none; font-weight: bold; text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+        :root { --bg-dark: #090d16; --card-bg: rgba(16, 23, 38, 0.85); --border-color: rgba(0, 229, 255, 0.2); --primary-cyan: #00e5ff; --gov-saffron: #ff9933; --text-main: #f0f6fc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        .gov-top-bar { background: linear-gradient(90deg, #111, #1a2332, #111); color: var(--gov-saffron); padding: 8px 20px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--gov-saffron); }
+        .main-header { background: rgba(13, 19, 33, 0.9); border-bottom: 1px solid var(--border-color); padding: 20px; text-align: center; }
+        .main-header h1 { color: var(--primary-cyan); font-size: 1.8rem; }
+        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); border-radius: 12px; padding: 30px; width: 100%; max-width: 400px; }
+        .input-field { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; margin-bottom: 15px; outline: none; }
+        .input-field:focus { border-color: var(--primary-cyan); }
+        .btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #00e5ff, #0072ff); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .btn:hover { box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); }
     </style>
 </head>
 <body>
-
-<div class="login-card">
-    <div class="icon-circle">
-        <svg viewBox="0 0 24 24"><path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm-2.999 5h11.998l.001 8H6V12z"/></svg>
+    <div class="gov-top-bar">
+        <span>🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</span>
+        <span>Authorized Access Only</span>
     </div>
-    <h2>SECURE NODE</h2>
-    <p>Authentication Required</p>
-
-    <div class="input-group">
-        <input type="text" id="username" placeholder="Enter Your Name">
+    <header class="main-header">
+        <h1>🏛️ Patel Cyber Tools</h1>
+        <p style="color: #8b949e; font-size: 0.9rem;">Secure Authentication Portal</p>
+    </header>
+    <div class="container">
+        <div class="card">
+            <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary-cyan);">Admin Login</h2>
+            <form action="patel-admin.html" method="GET">
+                <label style="font-size: 0.9rem; color: #8b949e;">Username / Badge ID</label>
+                <input type="text" class="input-field" placeholder="Enter Username" required>
+                <label style="font-size: 0.9rem; color: #8b949e;">Password</label>
+                <input type="password" class="input-field" placeholder="Enter Password" required>
+                <button type="submit" class="btn">Authenticate</button>
+            </form>
+        </div>
     </div>
-    <div class="input-group">
-        <input type="password" id="access-password" placeholder="Access Password">
-    </div>
-    
-    <button onclick="verifyAccess()" id="login-btn">DECRYPT & ENTER</button>
-    <div id="error-msg" class="error">Access Denied!</div>
-</div>
-
-<script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-    const supabase = createClient('https://eatolkikwxsqlhkitdlj.supabase.co', 'sb_publishable_YOwpG31mpFqkI4NBRPU8GQ_We-8lGun');
-
-    window.verifyAccess = async function() {
-        const name = document.getElementById("username").value.trim();
-        const pass = document.getElementById("access-password").value.trim();
-        const errorDiv = document.getElementById("error-msg");
-        const btn = document.getElementById("login-btn");
-
-        if(!name || !pass) { 
-            errorDiv.innerText = "IDENTITY UNKNOWN"; 
-            errorDiv.style.display = "block"; 
-            return; 
-        }
-
-        btn.innerText = "VERIFYING...";
-        errorDiv.style.display = "none";
-
-        try {
-            const { data, error } = await supabase.from('settings').select('tool_password').limit(1);
-            
-            if(pass === data[0].tool_password) {
-                const dateStr = new Date().toLocaleString();
-                await supabase.from('access_logs').insert([{ name: name, login_time: dateStr }]);
-                localStorage.setItem("patel_user", name);
-                
-                btn.innerText = "ACCESS GRANTED";
-                btn.style.background = "#10b981";
-                btn.style.boxShadow = "0 0 20px #10b981";
-                setTimeout(() => { window.location.href = "patel-tools.html"; }, 800);
-            } else {
-                errorDiv.innerText = "INVALID KEY. INTRUDER ALERT.";
-                errorDiv.style.display = "block";
-                btn.innerText = "DECRYPT & ENTER";
-            }
-        } catch (e) {
-            errorDiv.innerText = "SYSTEM ERROR";
-            errorDiv.style.display = "block";
-            btn.innerText = "DECRYPT & ENTER";
-        }
-    }
-</script>
 </body>
 </html>
