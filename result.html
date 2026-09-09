@@ -1,91 +1,100 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Records - Patel Cyber Tools</title>
+    <title>Target Intel | Patel Cyber Tools</title>
     <style>
-        :root { --bg-dark: #090d16; --card-bg: rgba(16, 23, 38, 0.85); --border-color: rgba(0, 229, 255, 0.2); --primary-cyan: #00e5ff; --gov-saffron: #ff9933; --text-main: #f0f6fc; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-        .gov-top-bar { background: linear-gradient(90deg, #111, #1a2332, #111); color: var(--gov-saffron); padding: 8px 20px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--gov-saffron); }
-        .main-header { background: rgba(13, 19, 33, 0.9); border-bottom: 1px solid var(--border-color); padding: 20px; text-align: center; }
-        .main-header h1 { color: var(--primary-cyan); font-size: 1.8rem; }
-        .container { flex: 1; padding: 30px 20px; display: flex; justify-content: center; align-items: flex-start; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); border-radius: 12px; padding: 30px; width: 100%; max-width: 700px; }
-        .loader { text-align: center; color: var(--primary-cyan); padding: 40px; font-size: 1.2rem; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; display: none; }
-        .data-table th, .data-table td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .data-table th { color: #8b949e; width: 35%; }
-        .data-table td { font-weight: bold; color: #fff; }
-        .btn-back { display: inline-block; padding: 10px 20px; background: transparent; border: 1px solid var(--primary-cyan); color: var(--primary-cyan); text-decoration: none; border-radius: 6px; margin-top: 20px; }
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+        body { margin:0; background: #030712; color: #fff; font-family: 'Rajdhani', sans-serif; display: flex; flex-direction: column; min-height: 100vh;}
+        .gov-bar { background: #0a0a0a; border-bottom: 2px solid #ff9933; padding: 10px 20px; color: #ff9933; font-weight: bold; }
+        .container { flex: 1; padding: 40px 20px; display: flex; justify-content: center; }
+        .result-panel { background: rgba(10,15,30,0.8); border: 1px solid #00f0ff; padding: 40px; border-radius: 10px; width: 100%; max-width: 800px; box-shadow: 0 0 40px rgba(0,240,255,0.1); }
+        .header { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0,240,255,0.3); padding-bottom: 20px; margin-bottom: 30px; }
+        .status-badge { background: rgba(0,255,0,0.1); color: #00ff00; padding: 8px 15px; border: 1px solid #00ff00; border-radius: 5px; font-family: monospace; animation: pulse 1.5s infinite;}
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        .loader { text-align: center; padding: 50px 0; color: #00f0ff; font-size: 1.5rem; letter-spacing: 2px; }
+        .data-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .data-card { background: rgba(0,0,0,0.6); border-left: 4px solid #00f0ff; padding: 20px; border-radius: 5px; }
+        .data-label { color: #8ba3b8; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px; }
+        .data-value { color: #fff; font-size: 1.3rem; font-family: monospace; word-break: break-all; }
+        .btn-back { display: block; width: max-content; margin: 40px auto 0; padding: 10px 30px; border: 1px solid #00f0ff; color: #00f0ff; text-decoration: none; border-radius: 5px; }
+        .btn-back:hover { background: #00f0ff; color: #000; }
     </style>
 </head>
 <body>
-    <div class="gov-top-bar">
-        <span>🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</span>
-        <span>Database Records</span>
-    </div>
-    <header class="main-header">
-        <h1>🏛️ Patel Cyber Tools</h1>
-        <p style="color: #8b949e; font-size: 0.9rem;">Intelligence Output Screen</p>
-    </header>
-
+    <div class="gov-bar">🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</div>
     <div class="container">
-        <div class="card">
-            <h3 style="color: var(--primary-cyan); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px;">Scan Result</h3>
-            
-            <div id="loader" class="loader">
-                <p>⏳ Connecting to Secure Server...</p>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-top: 5px;">Fetching Target Data</p>
+        <div class="result-panel">
+            <div class="header">
+                <h2 style="color:#00f0ff; text-shadow: 0 0 10px #00f0ff;">TARGET PROFILE</h2>
+                <div class="status-badge" id="modeBadge">ANALYZING...</div>
             </div>
 
-            <table class="data-table" id="dataTable">
-                <tr>
-                    <th>Target Query / Number :</th>
-                    <td id="outQuery">-</td>
-                </tr>
-                <tr>
-                    <th>Record Status :</th>
-                    <td style="color: #0f0;">FOUND (ACTIVE)</td>
-                </tr>
-                <!-- Yahan API ka real data aayega -->
-                <tr>
-                    <th>Fetched Data 1 :</th>
-                    <td id="outData1">Waiting for API...</td>
-                </tr>
-                <tr>
-                    <th>Fetched Data 2 :</th>
-                    <td id="outData2">Waiting for API...</td>
-                </tr>
-            </table>
+            <div id="loader" class="loader">DECRYPTING DATABASE RECORDS...</div>
 
-            <a href="patel-tools.html" class="btn-back">⬅ New Search</a>
+            <div id="dataGrid" class="data-grid">
+                <!-- Dynamically Filled -->
+            </div>
+
+            <a href="patel-tools.html" class="btn-back">« Scan Another Number</a>
         </div>
     </div>
 
     <script>
-        // Query param se number/ID lena aur show karna
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const query = urlParams.get('query');
+        window.onload = async function() {
+            const queryParams = new URLSearchParams(window.location.search);
+            const query = queryParams.get('query');
+            const grid = document.getElementById('dataGrid');
             
-            if(query) {
-                document.getElementById('outQuery').innerText = query;
-                
-                // Demo Loading effect (1.5 seconds) - Iski jagah aapki API ka Fetch code chalega
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('dataTable').style.display = 'table';
+            // Check API from LocalStorage (Admin Panel)
+            let storedApi = localStorage.getItem('patel_api_url');
+
+            setTimeout(async () => {
+                document.getElementById('loader').style.display = 'none';
+                grid.style.display = 'grid';
+
+                // Agar Admin ne API daali hui hai
+                if (storedApi && storedApi.trim() !== '') {
+                    document.getElementById('modeBadge').innerText = "LIVE DATA FETCHED";
                     
-                    // Jab nayi API lagani ho toh is code ko hata kar apna API Fetch wala code daal dena.
-                    document.getElementById('outData1').innerText = "Data load ho raha hai (API link baad me add karna)";
-                    document.getElementById('outData2').innerText = "Data load ho raha hai (API link baad me add karna)";
-                }, 1500);
-            } else {
-                document.getElementById('loader').innerHTML = "<p style='color: red;'>Error: No Query Found!</p>";
-            }
+                    // Replace [NUMBER] in URL with actual query
+                    let finalUrl = storedApi.replace('[NUMBER]', query);
+
+                    try {
+                        const response = await fetch(finalUrl);
+                        const data = await response.json();
+                        grid.innerHTML += createCard("Target Query", query);
+                        
+                        for (const [key, value] of Object.entries(data)) {
+                            if (key !== "status" && value) {
+                                grid.innerHTML += createCard(key.replace(/_/g, ' '), value);
+                            }
+                        }
+                    } catch(e) {
+                        grid.innerHTML += `<div style="color:red; grid-column:span 2;">API Connect Error: Please check API URL in Admin Panel.</div>`;
+                    }
+
+                } else {
+                    // Agar API nahi hai toh VIP DEMO MODE chalega
+                    document.getElementById('modeBadge').innerText = "SYSTEM DEMO MODE";
+                    document.getElementById('modeBadge').style.color = "#ff9933";
+                    document.getElementById('modeBadge').style.borderColor = "#ff9933";
+
+                    grid.innerHTML += createCard("Target Number", query);
+                    grid.innerHTML += createCard("Full Name", "Vikram Singh (Demo)");
+                    grid.innerHTML += createCard("Aadhaar Number", "XXXX-XXXX-8492");
+                    grid.innerHTML += createCard("Telecom Provider", "Jio / Airtel");
+                    grid.innerHTML += createCard("Current State", "Madhya Pradesh");
+                    grid.innerHTML += createCard("Status", "Active & Verified");
+                }
+            }, 2000);
         };
+
+        function createCard(label, value) {
+            return `<div class="data-card"><div class="data-label">${label}</div><div class="data-value">${value}</div></div>`;
+        }
     </script>
 </body>
 </html>
