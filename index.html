@@ -1,44 +1,36 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Patel Cyber Tools</title>
+    <title>Patel Cyber Tools | Secure Intelligence</title>
     <style>
-        :root {
-            --bg-dark: #090d16;
-            --card-bg: rgba(16, 23, 38, 0.85);
-            --border-color: rgba(0, 229, 255, 0.2);
-            --primary-cyan: #00e5ff;
-            --gov-saffron: #ff9933;
-            --text-main: #f0f6fc;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-        .gov-top-bar { background: linear-gradient(90deg, #111, #1a2332, #111); color: var(--gov-saffron); padding: 8px 20px; font-size: 0.85rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--gov-saffron); }
-        .main-header { background: rgba(13, 19, 33, 0.9); border-bottom: 1px solid var(--border-color); padding: 20px; text-align: center; }
-        .main-header h1 { color: var(--primary-cyan); font-size: 1.8rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+        :root { --cyber-cyan: #00f0ff; --cyber-blue: #0057ff; --dark-bg: #030712; --panel-bg: rgba(10, 15, 30, 0.8); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+        body { background-color: var(--dark-bg); color: #fff; min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient(circle at 50% 50%, rgba(0, 87, 255, 0.1) 0%, transparent 60%), linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px); background-size: 100% 100%, 30px 30px, 30px 30px; }
+        .gov-bar { background: linear-gradient(90deg, #0a0a0a, #1a1a1a, #0a0a0a); border-bottom: 2px solid #ff9933; padding: 10px 20px; display: flex; justify-content: space-between; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; color: #ff9933; text-transform: uppercase; box-shadow: 0 2px 15px rgba(255, 153, 51, 0.2); }
         .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); border-radius: 12px; padding: 40px; text-align: center; width: 100%; max-width: 500px; }
-        .btn { display: inline-block; width: 100%; padding: 12px; margin-top: 15px; background: linear-gradient(135deg, #00e5ff, #0072ff); color: #000; font-weight: bold; text-decoration: none; border-radius: 8px; transition: 0.3s; }
-        .btn:hover { box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); transform: translateY(-2px); }
+        .cyber-card { background: var(--panel-bg); backdrop-filter: blur(20px); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 15px; padding: 50px; width: 100%; max-width: 550px; text-align: center; box-shadow: 0 0 30px rgba(0, 240, 255, 0.1); position: relative; overflow: hidden; }
+        .logo-text { font-size: 2.8rem; font-weight: 700; background: linear-gradient(to right, #fff, var(--cyber-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+        .subtitle { color: #8ba3b8; font-size: 1.1rem; margin-bottom: 40px; letter-spacing: 2px; }
+        .cyber-btn { display: block; width: 100%; padding: 16px; margin-bottom: 20px; background: linear-gradient(45deg, transparent 5%, var(--cyber-blue) 5%, var(--cyber-cyan) 100%); color: #000; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 5px; transition: 0.4s; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+        .cyber-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(0, 240, 255, 0.7); color: #fff; }
+        .btn-outline { background: transparent; border: 1px solid var(--cyber-cyan); color: var(--cyber-cyan); box-shadow: none; }
+        .btn-outline:hover { background: rgba(0, 240, 255, 0.1); color: #fff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
     </style>
 </head>
 <body>
-    <div class="gov-top-bar">
-        <span>🇮🇳 भारत सरकार | GOVERNMENT OF INDIA</span>
-        <span>National Cyber Portal</span>
+    <div class="gov-bar">
+        <span>🇮🇳 भारत सरकार | Government of India</span>
+        <span style="color: #00f0ff;">[ SECURE TERMINAL ]</span>
     </div>
-    <header class="main-header">
-        <h1>🏛️ Patel Cyber Tools</h1>
-        <p style="color: #8b949e; font-size: 0.9rem;">Secure Information Lookup Engine</p>
-    </header>
     <div class="container">
-        <div class="card">
-            <h2 style="margin-bottom: 10px;">Welcome to the Portal</h2>
-            <p style="color: #8b949e; margin-bottom: 25px;">Select an action to proceed into the secure network.</p>
-            <a href="patel-tools.html" class="btn">Launch Cyber Tools</a>
-            <a href="patel-login.html" class="btn" style="background: transparent; border: 1px solid var(--primary-cyan); color: var(--primary-cyan);">Admin Login</a>
+        <div class="cyber-card">
+            <h1 class="logo-text">PATEL CYBER TOOLS</h1>
+            <p class="subtitle">INTELLIGENCE & LOOKUP NETWORK</p>
+            <a href="patel-tools.html" class="cyber-btn">Initialize Lookup Engine</a>
+            <a href="patel-login.html" class="cyber-btn btn-outline">Admin Control Panel</a>
         </div>
     </div>
 </body>
